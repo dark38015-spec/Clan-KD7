@@ -1,0 +1,6122 @@
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local CoreGui = game:GetService("CoreGui")
+
+local KD7 = Instance.new("ScreenGui")
+KD7.Name = "KD7_HUB"
+KD7.IgnoreGuiInset = true
+KD7.ResetOnSpawn = false
+KD7.Parent = CoreGui
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Parent = KD7
+Main.Size = UDim2.new(0, 780, 0, 480)
+Main.Position = UDim2.new(0.5, -390, 0.5, -240)
+Main.BackgroundColor3 = Color3.fromRGB(20,20,20)
+Main.BackgroundTransparency = 0.25
+Main.BorderSizePixel = 0
+
+local MainCorner = Instance.new("UICorner", Main)
+MainCorner.CornerRadius = UDim.new(0, 14)
+
+local Tabs = Instance.new("ScrollingFrame")
+Tabs.Name = "Tabs"
+Tabs.Parent = Main
+Tabs.Size = UDim2.new(0, 160, 1, 0)
+Tabs.Position = UDim2.new(0, 0, 0, 0)
+Tabs.BackgroundColor3 = Color3.fromRGB(0,0,0)
+Tabs.BackgroundTransparency = 0.35
+Tabs.ScrollBarThickness = 4
+Tabs.CanvasSize = UDim2.new(0, 0, 0, 1200)
+Tabs.BorderSizePixel = 0
+
+local TabsCorner = Instance.new("UICorner", Tabs)
+TabsCorner.CornerRadius = UDim.new(0, 12)
+
+local TabsStroke = Instance.new("UIStroke", Tabs)
+TabsStroke.Thickness = 3
+TabsStroke.Color = Color3.fromRGB(255,255,255)
+
+local TabsList = Instance.new("UIListLayout", Tabs)
+TabsList.Padding = UDim.new(0, 6)
+TabsList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local Pages = Instance.new("Folder")
+Pages.Name = "Pages"
+Pages.Parent = Main
+
+local function NewPage(name)
+    local Page = Instance.new("ScrollingFrame")
+    Page.Name = name
+    Page.Parent = Pages
+    Page.Size = UDim2.new(1, -170, 1, -20)
+    Page.Position = UDim2.new(0, 170, 0, 10)
+    Page.BackgroundTransparency = 1
+    Page.ScrollBarThickness = 4
+    Page.CanvasSize = UDim2.new(0, 0, 0, 0)
+    Page.Visible = false
+
+    local Layout = Instance.new("UIListLayout", Page)
+    Layout.Padding = UDim.new(0, 8)
+    Layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    return Page
+end
+
+local function NewTab(name, page)
+    local Btn = Instance.new("TextButton")
+    Btn.Name = name.."_Tab"
+    Btn.Parent = Tabs
+    Btn.Size = UDim2.new(1, -10, 0, 40)
+    Btn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    Btn.BackgroundTransparency = 0.25
+    Btn.TextColor3 = Color3.fromRGB(255,255,255)
+    Btn.Font = Enum.Font.GothamBold
+    Btn.TextSize = 16
+    Btn.Text = name
+
+    local BtnCorner = Instance.new("UICorner", Btn)
+    BtnCorner.CornerRadius = UDim.new(0, 10)
+
+    local BtnStroke = Instance.new("UIStroke", Btn)
+    BtnStroke.Thickness = 2
+    BtnStroke.Color = Color3.fromRGB(255,255,255)
+
+    Btn.MouseButton1Click:Connect(function()
+        for _,pg in pairs(Pages:GetChildren()) do
+            pg.Visible = false
+        end
+        page.Visible = true
+    end)
+end
+local Page_Main        = NewPage("الرئيسية")
+local Page_Scooter     = NewPage("السكوتر")
+local Page_Music       = NewPage("الأغاني")
+local Page_Smala       = NewPage("الصملة")
+local Page_Jerk        = NewPage("التجليخ")
+local Page_JerkFront   = NewPage("التجليخ الأمامي")
+local Page_Yems        = NewPage("اليمص")
+local Page_Bang        = NewPage("البانق")
+local Page_Fling       = NewPage("الفلنق")
+local Page_Target      = NewPage("الضحية")
+local Page_Protections = NewPage("الحمايات")
+local Page_Teleport    = NewPage("الانتقالات")
+local Page_Anim        = NewPage("الأنيميشن")
+local Page_Avatar      = NewPage("الأفاتار")
+local Page_Houses      = NewPage("البيوت")
+local Page_Cars        = NewPage("السيارات")
+local Page_Server      = NewPage("السيرفر")
+local Page_Settings    = NewPage("الإعدادات")
+local Page_KD7System   = NewPage("KD7 SYSTEM")
+
+NewTab("الرئيسية", Page_Main)
+NewTab("السكوتر", Page_Scooter)
+NewTab("الأغاني", Page_Music)
+NewTab("الصملة", Page_Smala)
+NewTab("التجليخ", Page_Jerk)
+NewTab("التجليخ الأمامي", Page_JerkFront)
+NewTab("اليمص", Page_Yems)
+NewTab("البانق", Page_Bang)
+NewTab("الفلنق", Page_Fling)
+NewTab("الضحية", Page_Target)
+NewTab("الحمايات", Page_Protections)
+NewTab("الانتقالات", Page_Teleport)
+NewTab("الأنيميشن", Page_Anim)
+NewTab("الأفاتار", Page_Avatar)
+NewTab("البيوت", Page_Houses)
+NewTab("السيارات", Page_Cars)
+NewTab("السيرفر", Page_Server)
+NewTab("الإعدادات", Page_Settings)
+NewTab("KD7 SYSTEM", Page_KD7System)
+
+Page_Main.Visible = true
+local function AddLabel(txt, parent)
+    local L = Instance.new("TextLabel")
+    L.Name = txt.."_Label"
+    L.Parent = parent
+    L.Size = UDim2.new(1, -20, 0, 35)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255, 255, 255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = txt
+    return L
+end
+
+local function AddButton(txt, parent)
+    local Btn = Instance.new("TextButton")
+    Btn.Name = txt.."_Btn"
+    Btn.Parent = parent
+    Btn.Size = UDim2.new(1, -20, 0, 42)
+    Btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Btn.BackgroundTransparency = 0.25
+    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Btn.Font = Enum.Font.GothamBold
+    Btn.TextScaled = true
+    Btn.Text = txt
+
+    local BtnCorner = Instance.new("UICorner", Btn)
+    BtnCorner.CornerRadius = UDim.new(0, 10)
+
+    local BtnStroke = Instance.new("UIStroke", Btn)
+    BtnStroke.Thickness = 2
+    BtnStroke.Color = Color3.fromRGB(255, 255, 255)
+
+    return Btn
+end
+
+local function AddSpace(parent)
+    local S = Instance.new("Frame")
+    S.Parent = parent
+    S.Size = UDim2.new(1, -20, 0, 10)
+    S.BackgroundTransparency = 1
+    return S
+end
+
+local function AddBox(txt, parent)
+    local Box = Instance.new("TextBox")
+    Box.Name = txt.."_Box"
+    Box.Parent = parent
+    Box.Size = UDim2.new(1, -20, 0, 40)
+    Box.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Box.BackgroundTransparency = 0.25
+    Box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Box.Font = Enum.Font.GothamBold
+    Box.TextScaled = true
+    Box.PlaceholderText = txt
+
+    local BoxCorner = Instance.new("UICorner", Box)
+    BoxCorner.CornerRadius = UDim.new(0, 10)
+
+    local BoxStroke = Instance.new("UIStroke", Box)
+    BoxStroke.Thickness = 2
+    BoxStroke.Color = Color3.fromRGB(255, 255, 255)
+
+    return Box
+end
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RE = ReplicatedStorage:WaitForChild("RE")
+
+local function AddToggle(txt, parent)
+    local ToggleFrame = Instance.new("Frame")
+    ToggleFrame.Name = txt.."_Toggle"
+    ToggleFrame.Parent = parent
+    ToggleFrame.Size = UDim2.new(1, -20, 0, 45)
+    ToggleFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    ToggleFrame.BackgroundTransparency = 0.25
+
+    local Corner = Instance.new("UICorner", ToggleFrame)
+    Corner.CornerRadius = UDim.new(0, 10)
+
+    local Stroke = Instance.new("UIStroke", ToggleFrame)
+    Stroke.Thickness = 2
+    Stroke.Color = Color3.fromRGB(255, 255, 255)
+
+    local Label = Instance.new("TextLabel")
+    Label.Name = "Label"
+    Label.Parent = ToggleFrame
+    Label.Size = UDim2.new(0.7, 0, 1, 0)
+    Label.BackgroundTransparency = 1
+    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Label.Font = Enum.Font.GothamBold
+    Label.TextScaled = true
+    Label.Text = txt
+
+    local Btn = Instance.new("TextButton")
+    Btn.Name = "Switch"
+    Btn.Parent = ToggleFrame
+    Btn.Size = UDim2.new(0.3, -10, 1, -10)
+    Btn.Position = UDim2.new(0.7, 5, 0, 5)
+    Btn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    Btn.Text = ""
+    Btn.BorderSizePixel = 0
+
+    local BtnCorner = Instance.new("UICorner", Btn)
+    BtnCorner.CornerRadius = UDim.new(0, 8)
+
+    local state = false
+
+    Btn.MouseButton1Click:Connect(function()
+        state = not state
+        Btn.BackgroundColor3 = state and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+    end)
+
+    return Btn, function() return state end
+end
+
+local function AddSlider(txt, parent)
+    local SliderFrame = Instance.new("Frame")
+    SliderFrame.Name = txt.."_Slider"
+    SliderFrame.Parent = parent
+    SliderFrame.Size = UDim2.new(1, -20, 0, 50)
+    SliderFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    SliderFrame.BackgroundTransparency = 0.25
+
+    local Corner = Instance.new("UICorner", SliderFrame)
+    Corner.CornerRadius = UDim.new(0, 10)
+
+    local Stroke = Instance.new("UIStroke", SliderFrame)
+    Stroke.Thickness = 2
+    Stroke.Color = Color3.fromRGB(255, 255, 255)
+
+    local Label = Instance.new("TextLabel")
+    Label.Name = "Label"
+    Label.Parent = SliderFrame
+    Label.Size = UDim2.new(1, -20, 0, 20)
+    Label.Position = UDim2.new(0, 10, 0, 5)
+    Label.BackgroundTransparency = 1
+    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Label.Font = Enum.Font.GothamBold
+    Label.TextScaled = true
+    Label.Text = txt
+
+    local Slider = Instance.new("TextBox")
+    Slider.Name = "Value"
+    Slider.Parent = SliderFrame
+    Slider.Size = UDim2.new(1, -20, 0, 25)
+    Slider.Position = UDim2.new(0, 10, 0, 25)
+    Slider.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Slider.Font = Enum.Font.GothamBold
+    Slider.TextScaled = true
+    Slider.Text = "0"
+
+    local SliderCorner = Instance.new("UICorner", Slider)
+    SliderCorner.CornerRadius = UDim.new(0, 8)
+
+    local SliderStroke = Instance.new("UIStroke", Slider)
+    SliderStroke.Thickness = 2
+    SliderStroke.Color = Color3.fromRGB(255, 255, 255)
+
+    return Slider
+end
+
+local function AddImage(parent, id)
+    local Img = Instance.new("ImageLabel")
+    Img.Name = "KD7_Image"
+    Img.Parent = parent
+    Img.Size = UDim2.new(0, 140, 0, 140)
+    Img.BackgroundTransparency = 1
+    Img.Image = "rbxassetid://"..id
+
+    local Corner = Instance.new("UICorner", Img)
+    Corner.CornerRadius = UDim.new(0, 12)
+
+    return Img
+end
+AddLabel("KD7 HUB - الصفحة الرئيسية", Page_Main)
+AddSpace(Page_Main)
+
+local Avatar = Instance.new("ImageLabel")
+Avatar.Name = "KD7_Avatar"
+Avatar.Parent = Page_Main
+Avatar.Size = UDim2.new(0, 120, 0, 120)
+Avatar.BackgroundTransparency = 1
+
+local thumb, _ = Players:GetUserThumbnailAsync(lp.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+Avatar.Image = thumb
+
+local AvatarCorner = Instance.new("UICorner", Avatar)
+AvatarCorner.CornerRadius = UDim.new(0, 12)
+
+AddSpace(Page_Main)
+
+local PlayerName = Instance.new("TextLabel")
+PlayerName.Name = "KD7_PlayerName"
+PlayerName.Parent = Page_Main
+PlayerName.Size = UDim2.new(1, -20, 0, 40)
+PlayerName.BackgroundTransparency = 1
+PlayerName.TextColor3 = Color3.fromRGB(255,255,255)
+PlayerName.Font = Enum.Font.GothamBold
+PlayerName.TextScaled = true
+PlayerName.Text = lp.Name
+
+AddSpace(Page_Main)
+
+local LogFrame = Instance.new("ScrollingFrame")
+LogFrame.Name = "KD7_Log"
+LogFrame.Parent = Page_Main
+LogFrame.Size = UDim2.new(1, -20, 0, 150)
+LogFrame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+LogFrame.BackgroundTransparency = 0.25
+LogFrame.ScrollBarThickness = 4
+LogFrame.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local LogCorner = Instance.new("UICorner", LogFrame)
+LogCorner.CornerRadius = UDim.new(0, 10)
+
+local LogStroke = Instance.new("UIStroke", LogFrame)
+LogStroke.Thickness = 2
+LogStroke.Color = Color3.fromRGB(255,255,255)
+
+local LogList = Instance.new("UIListLayout", LogFrame)
+LogList.Padding = UDim.new(0, 4)
+LogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = LogFrame
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+AddLog("KD7 HUB Loaded Successfully")
+AddLog("Player: "..lp.Name)
+AddLog("Ready to use all features")
+AddLog("All pages installed")
+AddLog("Waiting for user actions...")
+AddLabel("نظام السكوتر KD7", Page_Scooter)
+AddSpace(Page_Scooter)
+
+local ScooterRemoteBox = AddBox("اسم الريموت / Remote Name", Page_Scooter)
+AddSpace(Page_Scooter)
+
+local ScooterIDBox = AddBox("ID الأغنية", Page_Scooter)
+AddSpace(Page_Scooter)
+
+local BtnFindScooter = AddButton("استخراج الريموتات تلقائياً", Page_Scooter)
+local BtnPlayScooter = AddButton("تشغيل السكوتر", Page_Scooter)
+local BtnStopScooter = AddButton("إيقاف السكوتر", Page_Scooter)
+local BtnRGBScooter = AddButton("RGB السكوتر", Page_Scooter)
+local BtnScooterMusic = AddButton("تشغيل أغنية من السكوتر", Page_Scooter)
+
+AddSpace(Page_Scooter)
+AddLabel("معلومات السكوتر", Page_Scooter)
+
+local ScooterInfo = Instance.new("TextLabel")
+ScooterInfo.Name = "ScooterInfo"
+ScooterInfo.Parent = Page_Scooter
+ScooterInfo.Size = UDim2.new(1, -20, 0, 40)
+ScooterInfo.BackgroundTransparency = 1
+ScooterInfo.TextColor3 = Color3.fromRGB(255,255,255)
+ScooterInfo.Font = Enum.Font.GothamBold
+ScooterInfo.TextScaled = true
+ScooterInfo.Text = "لم يتم العثور على السكوتر بعد"
+
+local function FindScooterRemote()
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("RemoteEvent") or v:IsA("RemoteFunction") then
+            if string.find(string.lower(v.Name), "scooter") or string.find(string.lower(v.Name), "music") then
+                ScooterRemoteBox.Text = v.Name
+                ScooterInfo.Text = "تم العثور على الريموت: "..v.Name
+                return v
+            end
+        end
+    end
+    ScooterInfo.Text = "لم يتم العثور على أي ريموت"
+    return nil
+end
+
+BtnFindScooter.MouseButton1Click:Connect(function()
+    FindScooterRemote()
+end)
+
+BtnPlayScooter.MouseButton1Click:Connect(function()
+    local remoteName = ScooterRemoteBox.Text
+    if remoteName == "" then return end
+    local remote = workspace:FindFirstChild(remoteName, true)
+    if remote then
+        remote:FireServer("Play")
+        ScooterInfo.Text = "تم تشغيل السكوتر"
+    else
+        ScooterInfo.Text = "الريموت غير موجود"
+    end
+end)
+
+BtnStopScooter.MouseButton1Click:Connect(function()
+    local remoteName = ScooterRemoteBox.Text
+    if remoteName == "" then return end
+    local remote = workspace:FindFirstChild(remoteName, true)
+    if remote then
+        remote:FireServer("Stop")
+        ScooterInfo.Text = "تم إيقاف السكوتر"
+    else
+        ScooterInfo.Text = "الريموت غير موجود"
+    end
+end)
+
+BtnRGBScooter.MouseButton1Click:Connect(function()
+    local remoteName = ScooterRemoteBox.Text
+    if remoteName == "" then return end
+    local remote = workspace:FindFirstChild(remoteName, true)
+    if remote then
+        remote:FireServer("RGB")
+        ScooterInfo.Text = "تم تفعيل RGB للسكوتر"
+    else
+        ScooterInfo.Text = "الريموت غير موجود"
+    end
+end)
+
+BtnScooterMusic.MouseButton1Click:Connect(function()
+    local remoteName = ScooterRemoteBox.Text
+    local id = ScooterIDBox.Text
+    if remoteName == "" or id == "" then return end
+    local remote = workspace:FindFirstChild(remoteName, true)
+    if remote then
+        remote:FireServer("Music", id)
+        ScooterInfo.Text = "تم تشغيل الأغنية من السكوتر"
+    else
+        ScooterInfo.Text = "الريموت غير موجود"
+    end
+end)
+AddLabel("مشغل الأغاني KD7", Page_Music)
+AddSpace(Page_Music)
+
+local MusicID = AddBox("ID الأغنية", Page_Music)
+AddSpace(Page_Music)
+
+local BtnPlayMusic = AddButton("تشغيل الأغنية", Page_Music)
+local BtnStopMusic = AddButton("إيقاف الأغنية", Page_Music)
+local BtnPauseMusic = AddButton("إيقاف مؤقت", Page_Music)
+local BtnResumeMusic = AddButton("استئناف", Page_Music)
+local BtnLoopMusic = AddButton("تكرار الأغنية", Page_Music)
+local BtnMuteMusic = AddButton("كتم الصوت", Page_Music)
+local BtnUnmuteMusic = AddButton("إلغاء الكتم", Page_Music)
+local BtnVolUp = AddButton("رفع الصوت", Page_Music)
+local BtnVolDown = AddButton("خفض الصوت", Page_Music)
+local BtnPlayFromScooter = AddButton("تشغيل من السكوتر", Page_Music)
+
+AddSpace(Page_Music)
+AddLabel("لوق تشغيل الأغاني", Page_Music)
+
+local MusicLog = Instance.new("ScrollingFrame")
+MusicLog.Name = "MusicLog"
+MusicLog.Parent = Page_Music
+MusicLog.Size = UDim2.new(1, -20, 0, 150)
+MusicLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+MusicLog.BackgroundTransparency = 0.25
+MusicLog.ScrollBarThickness = 4
+MusicLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local MusicLogCorner = Instance.new("UICorner", MusicLog)
+MusicLogCorner.CornerRadius = UDim.new(0, 10)
+
+local MusicLogStroke = Instance.new("UIStroke", MusicLog)
+MusicLogStroke.Thickness = 2
+MusicLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local MusicLogList = Instance.new("UIListLayout", MusicLog)
+MusicLogList.Padding = UDim.new(0, 4)
+MusicLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddMusicLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = MusicLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local MusicSound = Instance.new("Sound")
+MusicSound.Name = "KD7_MusicSound"
+MusicSound.Parent = workspace
+MusicSound.Volume = 3
+MusicSound.Looped = false
+
+BtnPlayMusic.MouseButton1Click:Connect(function()
+    local id = MusicID.Text
+    if id == "" then return end
+    MusicSound.SoundId = "rbxassetid://"..id
+    MusicSound:Play()
+    AddMusicLog("تشغيل الأغنية: "..id)
+end)
+
+BtnStopMusic.MouseButton1Click:Connect(function()
+    MusicSound:Stop()
+    AddMusicLog("تم إيقاف الأغنية")
+end)
+
+BtnPauseMusic.MouseButton1Click:Connect(function()
+    MusicSound:Pause()
+    AddMusicLog("إيقاف مؤقت")
+end)
+
+BtnResumeMusic.MouseButton1Click:Connect(function()
+    MusicSound:Resume()
+    AddMusicLog("استئناف التشغيل")
+end)
+
+BtnLoopMusic.MouseButton1Click:Connect(function()
+    MusicSound.Looped = not MusicSound.Looped
+    AddMusicLog("تكرار: "..tostring(MusicSound.Looped))
+end)
+
+BtnMuteMusic.MouseButton1Click:Connect(function()
+    MusicSound.Volume = 0
+    AddMusicLog("تم كتم الصوت")
+end)
+
+BtnUnmuteMusic.MouseButton1Click:Connect(function()
+    MusicSound.Volume = 3
+    AddMusicLog("تم إلغاء الكتم")
+end)
+
+BtnVolUp.MouseButton1Click:Connect(function()
+    MusicSound.Volume = MusicSound.Volume + 1
+    AddMusicLog("رفع الصوت إلى: "..MusicSound.Volume)
+end)
+
+BtnVolDown.MouseButton1Click:Connect(function()
+    MusicSound.Volume = MusicSound.Volume - 1
+    AddMusicLog("خفض الصوت إلى: "..MusicSound.Volume)
+end)
+
+BtnPlayFromScooter.MouseButton1Click:Connect(function()
+    local remoteName = ScooterRemoteBox.Text
+    local id = MusicID.Text
+    if remoteName == "" or id == "" then return end
+    local remote = workspace:FindFirstChild(remoteName, true)
+    if remote then
+        remote:FireServer("Music", id)
+        AddMusicLog("تشغيل من السكوتر: "..id)
+    else
+        AddMusicLog("الريموت غير موجود")
+    end
+end)
+AddLabel("نظام الصمّلة KD7", Page_Smala)
+AddSpace(Page_Smala)
+
+local SmalaAvatar = Instance.new("ImageLabel")
+SmalaAvatar.Name = "SmalaAvatar"
+SmalaAvatar.Parent = Page_Smala
+SmalaAvatar.Size = UDim2.new(0, 140, 0, 140)
+SmalaAvatar.BackgroundTransparency = 1
+
+local thumb2, _ = Players:GetUserThumbnailAsync(lp.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+SmalaAvatar.Image = thumb2
+
+local SmalaAvatarCorner = Instance.new("UICorner", SmalaAvatar)
+SmalaAvatarCorner.CornerRadius = UDim.new(0, 12)
+
+AddSpace(Page_Smala)
+
+local BtnSmalaHands = AddButton("تفعيل يدين الصملة", Page_Smala)
+local BtnSmalaRotate = AddButton("تفعيل دوران الصملة", Page_Smala)
+local BtnSmalaStop = AddButton("إيقاف الصملة", Page_Smala)
+local BtnSmalaDetect = AddButton("كشف الضحية", Page_Smala)
+
+AddSpace(Page_Smala)
+AddLabel("لوق الصملة", Page_Smala)
+
+local SmalaLog = Instance.new("ScrollingFrame")
+SmalaLog.Name = "SmalaLog"
+SmalaLog.Parent = Page_Smala
+SmalaLog.Size = UDim2.new(1, -20, 0, 150)
+SmalaLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+SmalaLog.BackgroundTransparency = 0.25
+SmalaLog.ScrollBarThickness = 4
+SmalaLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local SmalaLogCorner = Instance.new("UICorner", SmalaLog)
+SmalaLogCorner.CornerRadius = UDim.new(0, 10)
+
+local SmalaLogStroke = Instance.new("UIStroke", SmalaLog)
+SmalaLogStroke.Thickness = 2
+SmalaLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local SmalaLogList = Instance.new("UIListLayout", SmalaLog)
+SmalaLogList.Padding = UDim.new(0, 4)
+SmalaLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddSmalaLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = SmalaLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+BtnSmalaHands.MouseButton1Click:Connect(function()
+    AddSmalaLog("تفعيل يدين الصملة")
+    local char = lp.Character
+    if char then
+        for _, v in pairs(char:GetChildren()) do
+            if v:IsA("Motor6D") then
+                v.C0 = v.C0 * CFrame.Angles(0, math.rad(90), 0)
+            end
+        end
+    end
+end)
+
+BtnSmalaRotate.MouseButton1Click:Connect(function()
+    AddSmalaLog("تفعيل دوران الصملة")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            while true do
+                task.wait()
+                if not BtnSmalaRotate or not BtnSmalaRotate.Parent then break end
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.Angles(0, math.rad(10), 0))
+            end
+        end)
+    end
+end)
+
+BtnSmalaStop.MouseButton1Click:Connect(function()
+    AddSmalaLog("إيقاف الصملة")
+end)
+
+BtnSmalaDetect.MouseButton1Click:Connect(function()
+    AddSmalaLog("كشف الضحية…")
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+    if target then
+        AddSmalaLog("الضحية: "..target.Name)
+    else
+        AddSmalaLog("لا يوجد ضحية")
+    end
+end)
+AddLabel("نظام التجليخ KD7", Page_Jerk)
+AddSpace(Page_Jerk)
+
+local BtnR6 = AddButton("تفعيل R6", Page_Jerk)
+local BtnR15 = AddButton("تفعيل R15", Page_Jerk)
+local BtnJerkTool = AddButton("تفعيل تول الجيرك", Page_Jerk)
+local BtnBackJerk = AddButton("تجليخ خلفي", Page_Jerk)
+local BtnSideJerk = AddButton("تجليخ جانبي", Page_Jerk)
+local BtnSpeedJerk = AddButton("تجليخ سريع", Page_Jerk)
+local BtnStopJerk = AddButton("إيقاف التجليخ", Page_Jerk)
+
+AddSpace(Page_Jerk)
+AddLabel("لوق التجليخ", Page_Jerk)
+
+local JerkLog = Instance.new("ScrollingFrame")
+JerkLog.Name = "JerkLog"
+JerkLog.Parent = Page_Jerk
+JerkLog.Size = UDim2.new(1, -20, 0, 150)
+JerkLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+JerkLog.BackgroundTransparency = 0.25
+JerkLog.ScrollBarThickness = 4
+JerkLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local JerkLogCorner = Instance.new("UICorner", JerkLog)
+JerkLogCorner.CornerRadius = UDim.new(0, 10)
+
+local JerkLogStroke = Instance.new("UIStroke", JerkLog)
+JerkLogStroke.Thickness = 2
+JerkLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local JerkLogList = Instance.new("UIListLayout", JerkLog)
+JerkLogList.Padding = UDim.new(0, 4)
+JerkLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddJerkLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = JerkLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+BtnR6.MouseButton1Click:Connect(function()
+    AddJerkLog("تفعيل R6")
+    local char = lp.Character
+    if char then
+        char.Humanoid.RigType = Enum.HumanoidRigType.R6
+    end
+end)
+
+BtnR15.MouseButton1Click:Connect(function()
+    AddJerkLog("تفعيل R15")
+    local char = lp.Character
+    if char then
+        char.Humanoid.RigType = Enum.HumanoidRigType.R15
+    end
+end)
+
+BtnJerkTool.MouseButton1Click:Connect(function()
+    AddJerkLog("تفعيل تول الجيرك")
+    local tool = Instance.new("Tool")
+    tool.Name = "KD7_JerkTool"
+    tool.RequiresHandle = false
+    tool.Parent = lp.Backpack
+end)
+
+BtnBackJerk.MouseButton1Click:Connect(function()
+    AddJerkLog("تجليخ خلفي")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 30 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -2))
+            end
+        end)
+    end
+end)
+
+BtnSideJerk.MouseButton1Click:Connect(function()
+    AddJerkLog("تجليخ جانبي")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 30 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(2, 0, 0))
+            end
+        end)
+    end
+end)
+
+BtnSpeedJerk.MouseButton1Click:Connect(function()
+    AddJerkLog("تجليخ سريع")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 60 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -4))
+            end
+        end)
+    end
+end)
+
+BtnStopJerk.MouseButton1Click:Connect(function()
+    AddJerkLog("إيقاف التجليخ")
+end)
+AddLabel("نظام التجليخ الأمامي KD7", Page_JerkFront)
+AddSpace(Page_JerkFront)
+
+local BtnFrontPush = AddButton("دفع أمامي", Page_JerkFront)
+local BtnFrontJerk = AddButton("جيرك أمامي", Page_JerkFront)
+local BtnFrontSpeed = AddButton("اندفاع أمامي سريع", Page_JerkFront)
+local BtnFrontStop = AddButton("إيقاف التجليخ الأمامي", Page_JerkFront)
+
+AddSpace(Page_JerkFront)
+AddLabel("لوق التجليخ الأمامي", Page_JerkFront)
+
+local FrontLog = Instance.new("ScrollingFrame")
+FrontLog.Name = "FrontLog"
+FrontLog.Parent = Page_JerkFront
+FrontLog.Size = UDim2.new(1, -20, 0, 150)
+FrontLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+FrontLog.BackgroundTransparency = 0.25
+FrontLog.ScrollBarThickness = 4
+FrontLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local FrontLogCorner = Instance.new("UICorner", FrontLog)
+FrontLogCorner.CornerRadius = UDim.new(0, 10)
+
+local FrontLogStroke = Instance.new("UIStroke", FrontLog)
+FrontLogStroke.Thickness = 2
+FrontLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local FrontLogList = Instance.new("UIListLayout", FrontLog)
+FrontLogList.Padding = UDim.new(0, 4)
+FrontLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddFrontLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = FrontLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+BtnFrontPush.MouseButton1Click:Connect(function()
+    AddFrontLog("دفع أمامي")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 25 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -3))
+            end
+        end)
+    end
+end)
+
+BtnFrontJerk.MouseButton1Click:Connect(function()
+    AddFrontLog("جيرك أمامي")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 40 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -4))
+            end
+        end)
+    end
+end)
+
+BtnFrontSpeed.MouseButton1Click:Connect(function()
+    AddFrontLog("اندفاع أمامي سريع")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 70 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -6))
+            end
+        end)
+    end
+end)
+
+BtnFrontStop.MouseButton1Click:Connect(function()
+    AddFrontLog("إيقاف التجليخ الأمامي")
+end)
+AddLabel("نظام اليمص KD7", Page_Yems)
+AddSpace(Page_Yems)
+
+local BtnYems = AddButton("يمص اللاعب", Page_Yems)
+local BtnYemsNear = AddButton("قرب اللاعب", Page_Yems)
+local BtnYemsDouble = AddButton("يمص دبل", Page_Yems)
+local BtnYemsPull = AddButton("سحب اللاعب", Page_Yems)
+local BtnYemsStop = AddButton("إيقاف اليمص", Page_Yems)
+
+AddSpace(Page_Yems)
+AddLabel("لوق اليمص", Page_Yems)
+
+local YemsLog = Instance.new("ScrollingFrame")
+YemsLog.Name = "YemsLog"
+YemsLog.Parent = Page_Yems
+YemsLog.Size = UDim2.new(1, -20, 0, 150)
+YemsLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+YemsLog.BackgroundTransparency = 0.25
+YemsLog.ScrollBarThickness = 4
+YemsLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local YemsLogCorner = Instance.new("UICorner", YemsLog)
+YemsLogCorner.CornerRadius = UDim.new(0, 10)
+
+local YemsLogStroke = Instance.new("UIStroke", YemsLog)
+YemsLogStroke.Thickness = 2
+YemsLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local YemsLogList = Instance.new("UIListLayout", YemsLog)
+YemsLogList.Padding = UDim.new(0, 4)
+YemsLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddYemsLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = YemsLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function GetTarget()
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            return plr
+        end
+    end
+    return nil
+end
+
+BtnYems.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddYemsLog("لا يوجد لاعب ليمصه")
+        return
+    end
+    AddYemsLog("يمص اللاعب: "..target.Name)
+    local char = lp.Character
+    if char then
+        char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 2))
+    end
+end)
+
+BtnYemsNear.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddYemsLog("لا يوجد لاعب للقرب منه")
+        return
+    end
+    AddYemsLog("قرب اللاعب: "..target.Name)
+    local char = lp.Character
+    if char then
+        char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 1))
+    end
+end)
+
+BtnYemsDouble.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddYemsLog("لا يوجد لاعب ليمص دبل")
+        return
+    end
+    AddYemsLog("يمص دبل: "..target.Name)
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 2 do
+                task.wait(0.1)
+                char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 2))
+            end
+        end)
+    end
+end)
+
+BtnYemsPull.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddYemsLog("لا يوجد لاعب لسحبه")
+        return
+    end
+    AddYemsLog("سحب اللاعب: "..target.Name)
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 30 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -2))
+            end
+        end)
+    end
+end)
+
+BtnYemsStop.MouseButton1Click:Connect(function()
+    AddYemsLog("إيقاف اليمص")
+end)
+AddLabel("نظام البانق KD7", Page_Bang)
+AddSpace(Page_Bang)
+
+local BtnBangFront = AddButton("بانق أمامي", Page_Bang)
+local BtnBangBack = AddButton("بانق خلفي", Page_Bang)
+local BtnBangFast = AddButton("بانق سريع", Page_Bang)
+local BtnBangAnim = AddButton("بانق أنيميشن", Page_Bang)
+local BtnBangStop = AddButton("إيقاف البانق", Page_Bang)
+
+AddSpace(Page_Bang)
+AddLabel("لوق البانق", Page_Bang)
+
+local BangLog = Instance.new("ScrollingFrame")
+BangLog.Name = "BangLog"
+BangLog.Parent = Page_Bang
+BangLog.Size = UDim2.new(1, -20, 0, 150)
+BangLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+BangLog.BackgroundTransparency = 0.25
+BangLog.ScrollBarThickness = 4
+BangLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local BangLogCorner = Instance.new("UICorner", BangLog)
+BangLogCorner.CornerRadius = UDim.new(0, 10)
+
+local BangLogStroke = Instance.new("UIStroke", BangLog)
+BangLogStroke.Thickness = 2
+BangLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local BangLogList = Instance.new("UIListLayout", BangLog)
+BangLogList.Padding = UDim.new(0, 4)
+BangLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddBangLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = BangLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function GetTarget()
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            return plr
+        end
+    end
+    return nil
+end
+
+BtnBangFront.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddBangLog("لا يوجد لاعب لعمل بانق أمامي")
+        return
+    end
+    AddBangLog("بانق أمامي على: "..target.Name)
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 35 do
+                task.wait()
+                char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -3))
+            end
+        end)
+    end
+end)
+
+BtnBangBack.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddBangLog("لا يوجد لاعب لعمل بانق خلفي")
+        return
+    end
+    AddBangLog("بانق خلفي على: "..target.Name)
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 35 do
+                task.wait()
+                char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 3))
+            end
+        end)
+    end
+end)
+
+BtnBangFast.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddBangLog("لا يوجد لاعب لعمل بانق سريع")
+        return
+    end
+    AddBangLog("بانق سريع على: "..target.Name)
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 60 do
+                task.wait()
+                char:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -5))
+            end
+        end)
+    end
+end)
+
+BtnBangAnim.MouseButton1Click:Connect(function()
+    local target = GetTarget()
+    if not target or not target.Character then
+        AddBangLog("لا يوجد لاعب لعمل بانق أنيميشن")
+        return
+    end
+    AddBangLog("بانق أنيميشن على: "..target.Name)
+    local char = lp.Character
+    if char then
+        local anim = Instance.new("Animation")
+        anim.AnimationId = "rbxassetid://507771019" -- أنيميشن ضرب
+        local track = char.Humanoid:LoadAnimation(anim)
+        track:Play()
+    end
+end)
+
+BtnBangStop.MouseButton1Click:Connect(function()
+    AddBangLog("إيقاف البانق")
+end)
+AddLabel("نظام الفلنق KD7", Page_Fling)
+AddSpace(Page_Fling)
+
+local BtnFlingSofa = AddButton("فلنق سوفا", Page_Fling)
+local BtnFlingBus = AddButton("فلنق باص", Page_Fling)
+local BtnFlingBall = AddButton("فلنق كرة", Page_Fling)
+local BtnFlingBoat = AddButton("فلنق قارب", Page_Fling)
+local BtnFlingTruck = AddButton("فلنق شاحنة", Page_Fling)
+local BtnFlingStop = AddButton("إيقاف الفلنق", Page_Fling)
+
+AddSpace(Page_Fling)
+AddLabel("لوق الفلنق", Page_Fling)
+
+local FlingLog = Instance.new("ScrollingFrame")
+FlingLog.Name = "FlingLog"
+FlingLog.Parent = Page_Fling
+FlingLog.Size = UDim2.new(1, -20, 0, 150)
+FlingLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+FlingLog.BackgroundTransparency = 0.25
+FlingLog.ScrollBarThickness = 4
+FlingLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local FlingLogCorner = Instance.new("UICorner", FlingLog)
+FlingLogCorner.CornerRadius = UDim.new(0, 10)
+
+local FlingLogStroke = Instance.new("UIStroke", FlingLog)
+FlingLogStroke.Thickness = 2
+FlingLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local FlingLogList = Instance.new("UIListLayout", FlingLog)
+FlingLogList.Padding = UDim.new(0, 4)
+FlingLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddFlingLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = FlingLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function FlingObject(modelName)
+    local char = lp.Character
+    if not char or not char.PrimaryPart then return end
+
+    local obj = nil
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Model") and string.find(string.lower(v.Name), modelName) then
+            obj = v
+            break
+        end
+    end
+
+    if not obj or not obj.PrimaryPart then
+        AddFlingLog("لم يتم العثور على: "..modelName)
+        return
+    end
+
+    AddFlingLog("فلنق: "..obj.Name)
+
+    spawn(function()
+        for i = 1, 40 do
+            task.wait()
+            char:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 0, -4))
+        end
+    end)
+end
+
+BtnFlingSofa.MouseButton1Click:Connect(function()
+    FlingObject("sofa")
+end)
+
+BtnFlingBus.MouseButton1Click:Connect(function()
+    FlingObject("bus")
+end)
+
+BtnFlingBall.MouseButton1Click:Connect(function()
+    FlingObject("ball")
+end)
+
+BtnFlingBoat.MouseButton1Click:Connect(function()
+    FlingObject("boat")
+end)
+
+BtnFlingTruck.MouseButton1Click:Connect(function()
+    FlingObject("truck")
+end)
+
+BtnFlingStop.MouseButton1Click:Connect(function()
+    AddFlingLog("إيقاف الفلنق")
+end)
+AddLabel("نظام الضحية KD7", Page_Target)
+AddSpace(Page_Target)
+
+local TargetBox = AddBox("اسم الضحية", Page_Target)
+AddSpace(Page_Target)
+
+local BtnSetTarget = AddButton("تحديد الضحية", Page_Target)
+local BtnTargetJoin = AddButton("رسالة ظهور الضحية", Page_Target)
+local BtnTargetLeave = AddButton("رسالة خروج الضحية", Page_Target)
+local BtnTargetTP = AddButton("انتقال إلى الضحية", Page_Target)
+local BtnTargetBring = AddButton("سحب الضحية إليك", Page_Target)
+local BtnTargetStop = AddButton("إيقاف نظام الضحية", Page_Target)
+
+AddSpace(Page_Target)
+AddLabel("لوق الضحية", Page_Target)
+
+local TargetLog = Instance.new("ScrollingFrame")
+TargetLog.Name = "TargetLog"
+TargetLog.Parent = Page_Target
+TargetLog.Size = UDim2.new(1, -20, 0, 150)
+TargetLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+TargetLog.BackgroundTransparency = 0.25
+TargetLog.ScrollBarThickness = 4
+TargetLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local TargetLogCorner = Instance.new("UICorner", TargetLog)
+TargetLogCorner.CornerRadius = UDim.new(0, 10)
+
+local TargetLogStroke = Instance.new("UIStroke", TargetLog)
+TargetLogStroke.Thickness = 2
+TargetLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local TargetLogList = Instance.new("UIListLayout", TargetLog)
+TargetLogList.Padding = UDim.new(0, 4)
+TargetLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddTargetLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = TargetLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local CurrentTarget = nil
+
+BtnSetTarget.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    if name == "" then
+        AddTargetLog("لم يتم إدخال اسم الضحية")
+        return
+    end
+
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            CurrentTarget = plr
+            AddTargetLog("تم تحديد الضحية: "..plr.Name)
+            return
+        end
+    end
+
+    AddTargetLog("الضحية غير موجودة")
+end)
+
+BtnTargetJoin.MouseButton1Click:Connect(function()
+    if not CurrentTarget then
+        AddTargetLog("لا يوجد ضحية لرسالة الظهور")
+        return
+    end
+    AddTargetLog("الضحية ظهرت: "..CurrentTarget.Name)
+end)
+
+BtnTargetLeave.MouseButton1Click:Connect(function()
+    if not CurrentTarget then
+        AddTargetLog("لا يوجد ضحية لرسالة الخروج")
+        return
+    end
+    AddTargetLog("الضحية خرجت: "..CurrentTarget.Name)
+end)
+
+BtnTargetTP.MouseButton1Click:Connect(function()
+    if not CurrentTarget or not CurrentTarget.Character then
+        AddTargetLog("لا يوجد ضحية للانتقال إليها")
+        return
+    end
+    AddTargetLog("انتقال إلى الضحية: "..CurrentTarget.Name)
+    local char = lp.Character
+    if char then
+        char:SetPrimaryPartCFrame(CurrentTarget.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 3))
+    end
+end)
+
+BtnTargetBring.MouseButton1Click:Connect(function()
+    if not CurrentTarget or not CurrentTarget.Character then
+        AddTargetLog("لا يوجد ضحية لسحبها")
+        return
+    end
+    AddTargetLog("سحب الضحية إليك: "..CurrentTarget.Name)
+    local char = lp.Character
+    if char then
+        CurrentTarget.Character:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, 3))
+    end
+end)
+
+BtnTargetStop.MouseButton1Click:Connect(function()
+    AddTargetLog("تم إيقاف نظام الضحية")
+    CurrentTarget = nil
+end)
+AddLabel("نظام الحمايات KD7", Page_Protections)
+AddSpace(Page_Protections)
+
+local BtnAntiSit = AddButton("حماية من الجلوس (AntiSit)", Page_Protections)
+local BtnAntiVoid = AddButton("حماية من السقوط (AntiVoid)", Page_Protections)
+local BtnAntiLag = AddButton("حماية من اللاغ (AntiLag)", Page_Protections)
+local BtnAntiFling = AddButton("حماية من الفلنق (AntiFling)", Page_Protections)
+local BtnAntiPush = AddButton("حماية من الدفع (AntiPush)", Page_Protections)
+local BtnProtStop = AddButton("إيقاف جميع الحمايات", Page_Protections)
+
+AddSpace(Page_Protections)
+AddLabel("لوق الحمايات", Page_Protections)
+
+local ProtLog = Instance.new("ScrollingFrame")
+ProtLog.Name = "ProtLog"
+ProtLog.Parent = Page_Protections
+ProtLog.Size = UDim2.new(1, -20, 0, 150)
+ProtLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ProtLog.BackgroundTransparency = 0.25
+ProtLog.ScrollBarThickness = 4
+ProtLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ProtLogCorner = Instance.new("UICorner", ProtLog)
+ProtLogCorner.CornerRadius = UDim.new(0, 10)
+
+local ProtLogStroke = Instance.new("UIStroke", ProtLog)
+ProtLogStroke.Thickness = 2
+ProtLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ProtLogList = Instance.new("UIListLayout", ProtLog)
+ProtLogList.Padding = UDim.new(0, 4)
+ProtLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddProtLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ProtLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- AntiSit
+BtnAntiSit.MouseButton1Click:Connect(function()
+    AddProtLog("تم تفعيل حماية AntiSit")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            while BtnAntiSit.Parent do
+                task.wait()
+                if char.Humanoid.Sit then
+                    char.Humanoid.Sit = false
+                end
+            end
+        end)
+    end
+end)
+
+-- AntiVoid
+BtnAntiVoid.MouseButton1Click:Connect(function()
+    AddProtLog("تم تفعيل حماية AntiVoid")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            while BtnAntiVoid.Parent do
+                task.wait()
+                if char.PrimaryPart.Position.Y < -10 then
+                    char:SetPrimaryPartCFrame(CFrame.new(0, 10, 0))
+                end
+            end
+        end)
+    end
+end)
+
+-- AntiLag
+BtnAntiLag.MouseButton1Click:Connect(function()
+    AddProtLog("تم تفعيل حماية AntiLag")
+    spawn(function()
+        while BtnAntiLag.Parent do
+            task.wait(1)
+            collectgarbage("collect")
+        end
+    end)
+end)
+
+-- AntiFling
+BtnAntiFling.MouseButton1Click:Connect(function()
+    AddProtLog("تم تفعيل حماية AntiFling")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            while BtnAntiFling.Parent do
+                task.wait()
+                for _, v in pairs(char:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+-- AntiPush
+BtnAntiPush.MouseButton1Click:Connect(function()
+    AddProtLog("تم تفعيل حماية AntiPush")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            while BtnAntiPush.Parent do
+                task.wait()
+                for _, v in pairs(char:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+-- Stop All
+BtnProtStop.MouseButton1Click:Connect(function()
+    AddProtLog("تم إيقاف جميع الحمايات")
+end)
+AddLabel("نظام الانتقالات KD7", Page_Teleport)
+AddSpace(Page_Teleport)
+
+local TPPlayerBox = AddBox("اسم اللاعب", Page_Teleport)
+AddSpace(Page_Teleport)
+
+local BtnTPPlayer = AddButton("انتقال إلى اللاعب", Page_Teleport)
+local BtnTPBehind = AddButton("انتقال خلف اللاعب", Page_Teleport)
+local BtnTPAbove = AddButton("انتقال فوق اللاعب", Page_Teleport)
+
+AddSpace(Page_Teleport)
+
+local TPPlaceBox = AddBox("اسم المكان", Page_Teleport)
+AddSpace(Page_Teleport)
+
+local BtnTPPlace = AddButton("انتقال إلى المكان", Page_Teleport)
+
+AddSpace(Page_Teleport)
+
+local BtnSavePos = AddButton("حفظ موقعي الحالي", Page_Teleport)
+local BtnLoadPos = AddButton("رجوع إلى موقعي المحفوظ", Page_Teleport)
+local BtnTPSpeed = AddButton("انتقال سريع للأمام", Page_Teleport)
+
+AddSpace(Page_Teleport)
+AddLabel("لوق الانتقالات", Page_Teleport)
+
+local TPLog = Instance.new("ScrollingFrame")
+TPLog.Name = "TPLog"
+TPLog.Parent = Page_Teleport
+TPLog.Size = UDim2.new(1, -20, 0, 150)
+TPLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+TPLog.BackgroundTransparency = 0.25
+TPLog.ScrollBarThickness = 4
+TPLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local TPLogCorner = Instance.new("UICorner", TPLog)
+TPLogCorner.CornerRadius = UDim.new(0, 10)
+
+local TPLogStroke = Instance.new("UIStroke", TPLog)
+TPLogStroke.Thickness = 2
+TPLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local TPLogList = Instance.new("UIListLayout", TPLog)
+TPLogList.Padding = UDim.new(0, 4)
+TPLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddTPLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = TPLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SavedPos = nil
+
+local function GetPlayer(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+BtnTPPlayer.MouseButton1Click:Connect(function()
+    local name = TPPlayerBox.Text
+    if name == "" then
+        AddTPLog("لم يتم إدخال اسم اللاعب")
+        return
+    end
+
+    local target = GetPlayer(name)
+    if not target or not target.Character then
+        AddTPLog("اللاعب غير موجود")
+        return
+    end
+
+    AddTPLog("انتقال إلى اللاعب: "..target.Name)
+    lp.Character:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 3))
+end)
+
+BtnTPBehind.MouseButton1Click:Connect(function()
+    local name = TPPlayerBox.Text
+    local target = GetPlayer(name)
+    if not target or not target.Character then
+        AddTPLog("لا يوجد لاعب للانتقال خلفه")
+        return
+    end
+
+    AddTPLog("انتقال خلف اللاعب: "..target.Name)
+    lp.Character:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, 5))
+end)
+
+BtnTPAbove.MouseButton1Click:Connect(function()
+    local name = TPPlayerBox.Text
+    local target = GetPlayer(name)
+    if not target or not target.Character then
+        AddTPLog("لا يوجد لاعب للانتقال فوقه")
+        return
+    end
+
+    AddTPLog("انتقال فوق اللاعب: "..target.Name)
+    lp.Character:SetPrimaryPartCFrame(target.Character.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
+end)
+
+BtnTPPlace.MouseButton1Click:Connect(function()
+    local place = TPPlaceBox.Text
+    if place == "" then
+        AddTPLog("لم يتم إدخال اسم المكان")
+        return
+    end
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") and string.lower(v.Name) == string.lower(place) then
+            AddTPLog("انتقال إلى المكان: "..v.Name)
+            lp.Character:SetPrimaryPartCFrame(v.CFrame + Vector3.new(0, 3, 0))
+            return
+        end
+    end
+
+    AddTPLog("المكان غير موجود")
+end)
+
+BtnSavePos.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char then
+        SavedPos = char.PrimaryPart.CFrame
+        AddTPLog("تم حفظ الموقع")
+    end
+end)
+
+BtnLoadPos.MouseButton1Click:Connect(function()
+    if not SavedPos then
+        AddTPLog("لا يوجد موقع محفوظ")
+        return
+    end
+    AddTPLog("رجوع إلى الموقع المحفوظ")
+    lp.Character:SetPrimaryPartCFrame(SavedPos)
+end)
+
+BtnTPSpeed.MouseButton1Click:Connect(function()
+    AddTPLog("انتقال سريع للأمام")
+    local char = lp.Character
+    if char then
+        spawn(function()
+            for i = 1, 40 do
+                task.wait()
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -4))
+            end
+        end)
+    end
+end)
+AddLabel("نظام السيارات KD7", Page_Cars)
+AddSpace(Page_Cars)
+
+local CarNameBox = AddBox("اسم السيارة", Page_Cars)
+AddSpace(Page_Cars)
+
+local BtnCarSpawn = AddButton("سباون السيارة", Page_Cars)
+local BtnCarDrive = AddButton("تشغيل القيادة", Page_Cars)
+local BtnCarStop = AddButton("إيقاف القيادة", Page_Cars)
+local BtnCarSpeed = AddButton("زيادة سرعة السيارة", Page_Cars)
+local BtnCarReverse = AddButton("رجوع السيارة للخلف", Page_Cars)
+
+AddSpace(Page_Cars)
+AddLabel("لوق السيارات", Page_Cars)
+
+local CarLog = Instance.new("ScrollingFrame")
+CarLog.Name = "CarLog"
+CarLog.Parent = Page_Cars
+CarLog.Size = UDim2.new(1, -20, 0, 150)
+CarLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+CarLog.BackgroundTransparency = 0.25
+CarLog.ScrollBarThickness = 4
+CarLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local CarLogCorner = Instance.new("UICorner", CarLog)
+CarLogCorner.CornerRadius = UDim.new(0, 10)
+
+local CarLogStroke = Instance.new("UIStroke", CarLog)
+CarLogStroke.Thickness = 2
+CarLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local CarLogList = Instance.new("UIListLayout", CarLog)
+CarLogList.Padding = UDim.new(0, 4)
+CarLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddCarLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = CarLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local CurrentCar = nil
+
+local function FindCar(name)
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Model") and string.lower(v.Name) == string.lower(name) then
+            return v
+        end
+    end
+    return nil
+end
+
+BtnCarSpawn.MouseButton1Click:Connect(function()
+    local name = CarNameBox.Text
+    if name == "" then
+        AddCarLog("لم يتم إدخال اسم السيارة")
+        return
+    end
+
+    local car = FindCar(name)
+    if not car then
+        AddCarLog("السيارة غير موجودة في الماب")
+        return
+    end
+
+    CurrentCar = car
+    AddCarLog("تم العثور على السيارة: "..car.Name)
+
+    local char = lp.Character
+    if char then
+        char:SetPrimaryPartCFrame(car.PrimaryPart.CFrame + Vector3.new(0, 3, 0))
+    end
+end)
+
+BtnCarDrive.MouseButton1Click:Connect(function()
+    if not CurrentCar or not CurrentCar.PrimaryPart then
+        AddCarLog("لا توجد سيارة لتشغيلها")
+        return
+    end
+
+    AddCarLog("تشغيل القيادة التلقائية للسيارة: "..CurrentCar.Name)
+
+    spawn(function()
+        while BtnCarDrive.Parent do
+            task.wait()
+            CurrentCar:SetPrimaryPartCFrame(CurrentCar.PrimaryPart.CFrame * CFrame.new(0, 0, -2))
+        end
+    end)
+end)
+
+BtnCarStop.MouseButton1Click:Connect(function()
+    AddCarLog("إيقاف القيادة")
+end)
+
+BtnCarSpeed.MouseButton1Click:Connect(function()
+    if not CurrentCar or not CurrentCar.PrimaryPart then
+        AddCarLog("لا توجد سيارة لزيادة سرعتها")
+        return
+    end
+
+    AddCarLog("زيادة سرعة السيارة")
+
+    spawn(function()
+        for i = 1, 40 do
+            task.wait()
+            CurrentCar:SetPrimaryPartCFrame(CurrentCar.PrimaryPart.CFrame * CFrame.new(0, 0, -4))
+        end
+    end)
+end)
+
+BtnCarReverse.MouseButton1Click:Connect(function()
+    if not CurrentCar or not CurrentCar.PrimaryPart then
+        AddCarLog("لا توجد سيارة للرجوع بها")
+        return
+    end
+
+    AddCarLog("رجوع السيارة للخلف")
+
+    spawn(function()
+        for i = 1, 30 do
+            task.wait()
+            CurrentCar:SetPrimaryPartCFrame(CurrentCar.PrimaryPart.CFrame * CFrame.new(0, 0, 3))
+        end
+    end)
+end)
+AddLabel("نظام البيوت KD7", Page_Houses)
+AddSpace(Page_Houses)
+
+local HouseNameBox = AddBox("اسم البيت", Page_Houses)
+AddSpace(Page_Houses)
+
+local BtnHouseSpawn = AddButton("سباون البيت", Page_Houses)
+local BtnHouseEnter = AddButton("دخول البيت", Page_Houses)
+local BtnHouseExit = AddButton("خروج من البيت", Page_Houses)
+local BtnHouseTP = AddButton("انتقال إلى البيت", Page_Houses)
+local BtnHouseSave = AddButton("حفظ موقع البيت", Page_Houses)
+local BtnHouseLoad = AddButton("رجوع لموقع البيت", Page_Houses)
+
+AddSpace(Page_Houses)
+AddLabel("لوق البيوت", Page_Houses)
+
+local HouseLog = Instance.new("ScrollingFrame")
+HouseLog.Name = "HouseLog"
+HouseLog.Parent = Page_Houses
+HouseLog.Size = UDim2.new(1, -20, 0, 150)
+HouseLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+HouseLog.BackgroundTransparency = 0.25
+HouseLog.ScrollBarThickness = 4
+HouseLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local HouseLogCorner = Instance.new("UICorner", HouseLog)
+HouseLogCorner.CornerRadius = UDim.new(0, 10)
+
+local HouseLogStroke = Instance.new("UIStroke", HouseLog)
+HouseLogStroke.Thickness = 2
+HouseLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local HouseLogList = Instance.new("UIListLayout", HouseLog)
+HouseLogList.Padding = UDim.new(0, 4)
+HouseLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddHouseLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = HouseLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SavedHousePos = nil
+local CurrentHouse = nil
+
+local function FindHouse(name)
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Model") and string.lower(v.Name) == string.lower(name) then
+            return v
+        end
+    end
+    return nil
+end
+
+BtnHouseSpawn.MouseButton1Click:Connect(function()
+    local name = HouseNameBox.Text
+    if name == "" then
+        AddHouseLog("لم يتم إدخال اسم البيت")
+        return
+    end
+
+    local house = FindHouse(name)
+    if not house then
+        AddHouseLog("البيت غير موجود في الماب")
+        return
+    end
+
+    CurrentHouse = house
+    AddHouseLog("تم العثور على البيت: "..house.Name)
+
+    local char = lp.Character
+    if char then
+        char:SetPrimaryPartCFrame(house.PrimaryPart.CFrame + Vector3.new(0, 3, 0))
+    end
+end)
+
+BtnHouseEnter.MouseButton1Click:Connect(function()
+    if not CurrentHouse or not CurrentHouse.PrimaryPart then
+        AddHouseLog("لا يوجد بيت للدخول إليه")
+        return
+    end
+
+    AddHouseLog("دخول البيت: "..CurrentHouse.Name)
+    lp.Character:SetPrimaryPartCFrame(CurrentHouse.PrimaryPart.CFrame + Vector3.new(0, 0, -3))
+end)
+
+BtnHouseExit.MouseButton1Click:Connect(function()
+    if not CurrentHouse or not CurrentHouse.PrimaryPart then
+        AddHouseLog("لا يوجد بيت للخروج منه")
+        return
+    end
+
+    AddHouseLog("خروج من البيت")
+    lp.Character:SetPrimaryPartCFrame(CurrentHouse.PrimaryPart.CFrame + Vector3.new(0, 0, 6))
+end)
+
+BtnHouseTP.MouseButton1Click:Connect(function()
+    if not CurrentHouse or not CurrentHouse.PrimaryPart then
+        AddHouseLog("لا يوجد بيت للانتقال إليه")
+        return
+    end
+
+    AddHouseLog("انتقال إلى البيت: "..CurrentHouse.Name)
+    lp.Character:SetPrimaryPartCFrame(CurrentHouse.PrimaryPart.CFrame + Vector3.new(0, 3, 0))
+end)
+
+BtnHouseSave.MouseButton1Click:Connect(function()
+    if not CurrentHouse or not CurrentHouse.PrimaryPart then
+        AddHouseLog("لا يوجد بيت لحفظ موقعه")
+        return
+    end
+
+    SavedHousePos = CurrentHouse.PrimaryPart.CFrame
+    AddHouseLog("تم حفظ موقع البيت")
+end)
+
+BtnHouseLoad.MouseButton1Click:Connect(function()
+    if not SavedHousePos then
+        AddHouseLog("لا يوجد موقع محفوظ للبيت")
+        return
+    end
+
+    AddHouseLog("رجوع لموقع البيت المحفوظ")
+    lp.Character:SetPrimaryPartCFrame(SavedHousePos + Vector3.new(0, 3, 0))
+end)
+AddLabel("نظام الأنيميشن KD7", Page_Animations)
+AddSpace(Page_Animations)
+
+local AnimIDBox = AddBox("ID الأنيميشن", Page_Animations)
+AddSpace(Page_Animations)
+
+local BtnPlayAnim = AddButton("تشغيل الأنيميشن", Page_Animations)
+local BtnStopAnim = AddButton("إيقاف الأنيميشن", Page_Animations)
+local BtnAnimSpeedUp = AddButton("زيادة سرعة الأنيميشن", Page_Animations)
+local BtnAnimSpeedDown = AddButton("خفض سرعة الأنيميشن", Page_Animations)
+
+AddSpace(Page_Animations)
+AddLabel("أنيميشنات جاهزة", Page_Animations)
+
+local BtnAnimDance = AddButton("رقصة", Page_Animations)
+local BtnAnimBackflip = AddButton("باك فليب", Page_Animations)
+local BtnAnimWave = AddButton("تحية", Page_Animations)
+local BtnAnimLean = AddButton("Lean", Page_Animations)
+local BtnAnimPushup = AddButton("Pushup", Page_Animations)
+
+AddSpace(Page_Animations)
+AddLabel("لوق الأنيميشن", Page_Animations)
+
+local AnimLog = Instance.new("ScrollingFrame")
+AnimLog.Name = "AnimLog"
+AnimLog.Parent = Page_Animations
+AnimLog.Size = UDim2.new(1, -20, 0, 150)
+AnimLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+AnimLog.BackgroundTransparency = 0.25
+AnimLog.ScrollBarThickness = 4
+AnimLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local AnimLogCorner = Instance.new("UICorner", AnimLog)
+AnimLogCorner.CornerRadius = UDim.new(0, 10)
+
+local AnimLogStroke = Instance.new("UIStroke", AnimLog)
+AnimLogStroke.Thickness = 2
+AnimLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local AnimLogList = Instance.new("UIListLayout", AnimLog)
+AnimLogList.Padding = UDim.new(0, 4)
+AnimLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddAnimLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = AnimLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local CurrentAnim = nil
+
+local function PlayAnimation(id)
+    local char = lp.Character
+    if not char then return end
+
+    local anim = Instance.new("Animation")
+    anim.AnimationId = "rbxassetid://"..id
+
+    local track = char.Humanoid:LoadAnimation(anim)
+    track:Play()
+    CurrentAnim = track
+
+    AddAnimLog("تشغيل الأنيميشن: "..id)
+end
+
+BtnPlayAnim.MouseButton1Click:Connect(function()
+    local id = AnimIDBox.Text
+    if id == "" then
+        AddAnimLog("لم يتم إدخال ID الأنيميشن")
+        return
+    end
+    PlayAnimation(id)
+end)
+
+BtnStopAnim.MouseButton1Click:Connect(function()
+    if CurrentAnim then
+        CurrentAnim:Stop()
+        AddAnimLog("تم إيقاف الأنيميشن")
+    end
+end)
+
+BtnAnimSpeedUp.MouseButton1Click:Connect(function()
+    if CurrentAnim then
+        CurrentAnim.Speed = CurrentAnim.Speed + 0.5
+        AddAnimLog("زيادة السرعة إلى: "..CurrentAnim.Speed)
+    end
+end)
+
+BtnAnimSpeedDown.MouseButton1Click:Connect(function()
+    if CurrentAnim then
+        CurrentAnim.Speed = CurrentAnim.Speed - 0.5
+        AddAnimLog("خفض السرعة إلى: "..CurrentAnim.Speed)
+    end
+end)
+
+-- جاهزة
+BtnAnimDance.MouseButton1Click:Connect(function()
+    PlayAnimation("507771019") -- Dance
+end)
+
+BtnAnimBackflip.MouseButton1Click:Connect(function()
+    PlayAnimation("180436148") -- Backflip
+end)
+
+BtnAnimWave.MouseButton1Click:Connect(function()
+    PlayAnimation("507770239") -- Wave
+end)
+
+BtnAnimLean.MouseButton1Click:Connect(function()
+    PlayAnimation("3152378852") -- Lean
+end)
+
+BtnAnimPushup.MouseButton1Click:Connect(function()
+    PlayAnimation("507771019") -- Pushup (نفس ID الرقص، تقدر تغيره)
+end)
+AddLabel("نظام الأفاتار KD7", Page_Avatar)
+AddSpace(Page_Avatar)
+
+local BodyIDBox = AddBox("ID الجسم", Page_Avatar)
+AddSpace(Page_Avatar)
+
+local FaceIDBox = AddBox("ID الوجه", Page_Avatar)
+AddSpace(Page_Avatar)
+
+local ShirtIDBox = AddBox("ID القميص", Page_Avatar)
+AddSpace(Page_Avatar)
+
+local PantsIDBox = AddBox("ID البنطال", Page_Avatar)
+AddSpace(Page_Avatar)
+
+local BtnApplyBody = AddButton("تغيير الجسم", Page_Avatar)
+local BtnApplyFace = AddButton("تغيير الوجه", Page_Avatar)
+local BtnApplyShirt = AddButton("تغيير القميص", Page_Avatar)
+local BtnApplyPants = AddButton("تغيير البنطال", Page_Avatar)
+local BtnAvatarR6 = AddButton("تحويل الأفاتار إلى R6", Page_Avatar)
+local BtnAvatarR15 = AddButton("تحويل الأفاتار إلى R15", Page_Avatar)
+
+AddSpace(Page_Avatar)
+AddLabel("لوق الأفاتار", Page_Avatar)
+
+local AvatarLog = Instance.new("ScrollingFrame")
+AvatarLog.Name = "AvatarLog"
+AvatarLog.Parent = Page_Avatar
+AvatarLog.Size = UDim2.new(1, -20, 0, 150)
+AvatarLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+AvatarLog.BackgroundTransparency = 0.25
+AvatarLog.ScrollBarThickness = 4
+AvatarLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local AvatarLogCorner = Instance.new("UICorner", AvatarLog)
+AvatarLogCorner.CornerRadius = UDim.new(0, 10)
+
+local AvatarLogStroke = Instance.new("UIStroke", AvatarLog)
+AvatarLogStroke.Thickness = 2
+AvatarLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local AvatarLogList = Instance.new("UIListLayout", AvatarLog)
+AvatarLogList.Padding = UDim.new(0, 4)
+AvatarLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddAvatarLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = AvatarLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- تغيير الجسم
+BtnApplyBody.MouseButton1Click:Connect(function()
+    local id = BodyIDBox.Text
+    if id == "" then
+        AddAvatarLog("لم يتم إدخال ID الجسم")
+        return
+    end
+
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تغيير الجسم إلى: "..id)
+        for _, v in pairs(char:GetChildren()) do
+            if v:IsA("BodyColors") then
+                v.HeadColor = BrickColor.new("White")
+            end
+        end
+        char.Humanoid:ApplyDescription(game.Players:GetHumanoidDescriptionFromUserId(id))
+    end
+end)
+
+-- تغيير الوجه
+BtnApplyFace.MouseButton1Click:Connect(function()
+    local id = FaceIDBox.Text
+    if id == "" then
+        AddAvatarLog("لم يتم إدخال ID الوجه")
+        return
+    end
+
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تغيير الوجه إلى: "..id)
+        local face = char:FindFirstChild("Head"):FindFirstChild("face")
+        if face then
+            face.Texture = "rbxassetid://"..id
+        end
+    end
+end)
+
+-- تغيير القميص
+BtnApplyShirt.MouseButton1Click:Connect(function()
+    local id = ShirtIDBox.Text
+    if id == "" then
+        AddAvatarLog("لم يتم إدخال ID القميص")
+        return
+    end
+
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تغيير القميص إلى: "..id)
+        local shirt = char:FindFirstChildOfClass("Shirt")
+        if not shirt then
+            shirt = Instance.new("Shirt", char)
+        end
+        shirt.ShirtTemplate = "rbxassetid://"..id
+    end
+end)
+
+-- تغيير البنطال
+BtnApplyPants.MouseButton1Click:Connect(function()
+    local id = PantsIDBox.Text
+    if id == "" then
+        AddAvatarLog("لم يتم إدخال ID البنطال")
+        return
+    end
+
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تغيير البنطال إلى: "..id)
+        local pants = char:FindFirstChildOfClass("Pants")
+        if not pants then
+            pants = Instance.new("Pants", char)
+        end
+        pants.PantsTemplate = "rbxassetid://"..id
+    end
+end)
+
+-- R6
+BtnAvatarR6.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تحويل الأفاتار إلى R6")
+        char.Humanoid.RigType = Enum.HumanoidRigType.R6
+    end
+end)
+
+-- R15
+BtnAvatarR15.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char then
+        AddAvatarLog("تحويل الأفاتار إلى R15")
+        char.Humanoid.RigType = Enum.HumanoidRigType.R15
+    end
+end)
+AddLabel("إعدادات KD7", Page_Settings)
+AddSpace(Page_Settings)
+
+local ThemeBox = AddBox("اسم الثيم (Dark / Light / KD7)", Page_Settings)
+AddSpace(Page_Settings)
+
+local ColorRBox = AddBox("لون R", Page_Settings)
+local ColorGBox = AddBox("لون G", Page_Settings)
+local ColorBBox = AddBox("لون B", Page_Settings)
+
+AddSpace(Page_Settings)
+
+local BtnApplyTheme = AddButton("تطبيق الثيم", Page_Settings)
+local BtnApplyColor = AddButton("تطبيق اللون", Page_Settings)
+local BtnRestartHub = AddButton("إعادة تشغيل الهب", Page_Settings)
+local BtnSaveSettings = AddButton("حفظ الإعدادات", Page_Settings)
+local BtnLoadSettings = AddButton("استرجاع الإعدادات", Page_Settings)
+
+AddSpace(Page_Settings)
+AddLabel("لوق الإعدادات", Page_Settings)
+
+local SettingsLog = Instance.new("ScrollingFrame")
+SettingsLog.Name = "SettingsLog"
+SettingsLog.Parent = Page_Settings
+SettingsLog.Size = UDim2.new(1, -20, 0, 150)
+SettingsLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+SettingsLog.BackgroundTransparency = 0.25
+SettingsLog.ScrollBarThickness = 4
+SettingsLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local SettingsLogCorner = Instance.new("UICorner", SettingsLog)
+SettingsLogCorner.CornerRadius = UDim.new(0, 10)
+
+local SettingsLogStroke = Instance.new("UIStroke", SettingsLog)
+SettingsLogStroke.Thickness = 2
+SettingsLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local SettingsLogList = Instance.new("UIListLayout", SettingsLog)
+SettingsLogList.Padding = UDim.new(0, 4)
+SettingsLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddSettingsLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = SettingsLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SavedSettings = {
+    Theme = "Dark",
+    Color = Color3.fromRGB(255,255,255)
+}
+
+-- تغيير الثيم
+BtnApplyTheme.MouseButton1Click:Connect(function()
+    local theme = string.lower(ThemeBox.Text)
+    if theme == "" then
+        AddSettingsLog("لم يتم إدخال اسم الثيم")
+        return
+    end
+
+    if theme == "dark" then
+        AddSettingsLog("تطبيق ثيم Dark")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    elseif theme == "light" then
+        AddSettingsLog("تطبيق ثيم Light")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    elseif theme == "kd7" then
+        AddSettingsLog("تطبيق ثيم KD7 الأبيض والأسود")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    else
+        AddSettingsLog("الثيم غير معروف")
+    end
+
+    SavedSettings.Theme = theme
+end)
+
+-- تغيير اللون
+BtnApplyColor.MouseButton1Click:Connect(function()
+    local r = tonumber(ColorRBox.Text)
+    local g = tonumber(ColorGBox.Text)
+    local b = tonumber(ColorBBox.Text)
+
+    if not r or not g or not b then
+        AddSettingsLog("الألوان غير صحيحة")
+        return
+    end
+
+    local color = Color3.fromRGB(r,g,b)
+    AddSettingsLog("تطبيق اللون: "..r..","..g..","..b)
+
+    for _, v in pairs(MainFrame:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.TextColor3 = color
+        end
+    end
+
+    SavedSettings.Color = color
+end)
+
+-- إعادة تشغيل الهب
+BtnRestartHub.MouseButton1Click:Connect(function()
+    AddSettingsLog("إعادة تشغيل الهب…")
+    MainFrame:Destroy()
+    loadstring(game:HttpGet("https://KD7HubRestart.lua"))()
+end)
+
+-- حفظ الإعدادات
+BtnSaveSettings.MouseButton1Click:Connect(function()
+    AddSettingsLog("تم حفظ الإعدادات")
+end)
+
+-- استرجاع الإعدادات
+BtnLoadSettings.MouseButton1Click:Connect(function()
+    AddSettingsLog("استرجاع الإعدادات…")
+
+    -- الثيم
+    if SavedSettings.Theme == "dark" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    elseif SavedSettings.Theme == "light" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    elseif SavedSettings.Theme == "kd7" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    end
+
+    -- اللون
+    for _, v in pairs(MainFrame:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.TextColor3 = SavedSettings.Color
+        end
+    end
+
+    AddSettingsLog("تم تطبيق الإعدادات المحفوظة")
+end)
+AddLabel("إعدادات KD7", Page_Settings)
+AddSpace(Page_Settings)
+
+local ThemeBox = AddBox("اسم الثيم (Dark / Light / KD7)", Page_Settings)
+AddSpace(Page_Settings)
+
+local ColorRBox = AddBox("لون R", Page_Settings)
+local ColorGBox = AddBox("لون G", Page_Settings)
+local ColorBBox = AddBox("لون B", Page_Settings)
+
+AddSpace(Page_Settings)
+
+local BtnApplyTheme = AddButton("تطبيق الثيم", Page_Settings)
+local BtnApplyColor = AddButton("تطبيق اللون", Page_Settings)
+local BtnRestartHub = AddButton("إعادة تشغيل الهب", Page_Settings)
+local BtnSaveSettings = AddButton("حفظ الإعدادات", Page_Settings)
+local BtnLoadSettings = AddButton("استرجاع الإعدادات", Page_Settings)
+
+AddSpace(Page_Settings)
+AddLabel("لوق الإعدادات", Page_Settings)
+
+local SettingsLog = Instance.new("ScrollingFrame")
+SettingsLog.Name = "SettingsLog"
+SettingsLog.Parent = Page_Settings
+SettingsLog.Size = UDim2.new(1, -20, 0, 150)
+SettingsLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+SettingsLog.BackgroundTransparency = 0.25
+SettingsLog.ScrollBarThickness = 4
+SettingsLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local SettingsLogCorner = Instance.new("UICorner", SettingsLog)
+SettingsLogCorner.CornerRadius = UDim.new(0, 10)
+
+local SettingsLogStroke = Instance.new("UIStroke", SettingsLog)
+SettingsLogStroke.Thickness = 2
+SettingsLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local SettingsLogList = Instance.new("UIListLayout", SettingsLog)
+SettingsLogList.Padding = UDim.new(0, 4)
+SettingsLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddSettingsLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = SettingsLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SavedSettings = {
+    Theme = "Dark",
+    Color = Color3.fromRGB(255,255,255)
+}
+
+-- تغيير الثيم
+BtnApplyTheme.MouseButton1Click:Connect(function()
+    local theme = string.lower(ThemeBox.Text)
+    if theme == "" then
+        AddSettingsLog("لم يتم إدخال اسم الثيم")
+        return
+    end
+
+    if theme == "dark" then
+        AddSettingsLog("تطبيق ثيم Dark")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    elseif theme == "light" then
+        AddSettingsLog("تطبيق ثيم Light")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    elseif theme == "kd7" then
+        AddSettingsLog("تطبيق ثيم KD7 الأبيض والأسود")
+        MainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    else
+        AddSettingsLog("الثيم غير معروف")
+    end
+
+    SavedSettings.Theme = theme
+end)
+
+-- تغيير اللون
+BtnApplyColor.MouseButton1Click:Connect(function()
+    local r = tonumber(ColorRBox.Text)
+    local g = tonumber(ColorGBox.Text)
+    local b = tonumber(ColorBBox.Text)
+
+    if not r or not g or not b then
+        AddSettingsLog("الألوان غير صحيحة")
+        return
+    end
+
+    local color = Color3.fromRGB(r,g,b)
+    AddSettingsLog("تطبيق اللون: "..r..","..g..","..b)
+
+    for _, v in pairs(MainFrame:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.TextColor3 = color
+        end
+    end
+
+    SavedSettings.Color = color
+end)
+
+-- إعادة تشغيل الهب
+BtnRestartHub.MouseButton1Click:Connect(function()
+    AddSettingsLog("إعادة تشغيل الهب…")
+    MainFrame:Destroy()
+    loadstring(game:HttpGet("https://KD7HubRestart.lua"))()
+end)
+
+-- حفظ الإعدادات
+BtnSaveSettings.MouseButton1Click:Connect(function()
+    AddSettingsLog("تم حفظ الإعدادات")
+end)
+
+-- استرجاع الإعدادات
+BtnLoadSettings.MouseButton1Click:Connect(function()
+    AddSettingsLog("استرجاع الإعدادات…")
+
+    -- الثيم
+    if SavedSettings.Theme == "dark" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    elseif SavedSettings.Theme == "light" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    elseif SavedSettings.Theme == "kd7" then
+        MainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    end
+
+    -- اللون
+    for _, v in pairs(MainFrame:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.TextColor3 = SavedSettings.Color
+        end
+    end
+
+    AddSettingsLog("تم تطبيق الإعدادات المحفوظة")
+end)
+AddLabel("نظام المطوّر KD7", Page_Dev)
+AddSpace(Page_Dev)
+
+local BtnListRemotes = AddButton("عرض جميع الريموتات", Page_Dev)
+local BtnListEvents = AddButton("عرض جميع الأحداث (Events)", Page_Dev)
+local BtnListFunctions = AddButton("عرض جميع الفنكشنات", Page_Dev)
+local BtnSpyRemotes = AddButton("Spy على الريموتات", Page_Dev)
+local BtnSpyEvents = AddButton("Spy على الأحداث", Page_Dev)
+local BtnSpyFunctions = AddButton("Spy على الفنكشنات", Page_Dev)
+local BtnStopSpy = AddButton("إيقاف الـ Spy", Page_Dev)
+
+AddSpace(Page_Dev)
+AddLabel("لوق المطوّر", Page_Dev)
+
+local DevLog = Instance.new("ScrollingFrame")
+DevLog.Name = "DevLog"
+DevLog.Parent = Page_Dev
+DevLog.Size = UDim2.new(1, -20, 0, 150)
+DevLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+DevLog.BackgroundTransparency = 0.25
+DevLog.ScrollBarThickness = 4
+DevLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local DevLogCorner = Instance.new("UICorner", DevLog)
+DevLogCorner.CornerRadius = UDim.new(0, 10)
+
+local DevLogStroke = Instance.new("UIStroke", DevLog)
+DevLogStroke.Thickness = 2
+DevLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local DevLogList = Instance.new("UIListLayout", DevLog)
+DevLogList.Padding = UDim.new(0, 4)
+DevLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddDevLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = DevLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- عرض الريموتات
+BtnListRemotes.MouseButton1Click:Connect(function()
+    AddDevLog("جميع الريموتات:")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("RemoteEvent") or v:IsA("RemoteFunction") then
+            AddDevLog("• "..v.Name.." ("..v.ClassName..")")
+        end
+    end
+end)
+
+-- عرض الأحداث
+BtnListEvents.MouseButton1Click:Connect(function()
+    AddDevLog("جميع الأحداث (BindableEvents):")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BindableEvent") then
+            AddDevLog("• "..v.Name)
+        end
+    end
+end)
+
+-- عرض الفنكشنات
+BtnListFunctions.MouseButton1Click:Connect(function()
+    AddDevLog("جميع الفنكشنات (BindableFunctions):")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BindableFunction") then
+            AddDevLog("• "..v.Name)
+        end
+    end
+end)
+
+-- Spy على الريموتات
+local SpyActive = false
+
+BtnSpyRemotes.MouseButton1Click:Connect(function()
+    AddDevLog("تشغيل Spy على الريموتات…")
+    SpyActive = true
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("RemoteEvent") then
+            v.OnClientEvent:Connect(function(...)
+                if SpyActive then
+                    AddDevLog("RemoteEvent Fired: "..v.Name)
+                end
+            end)
+        end
+        if v:IsA("RemoteFunction") then
+            v.OnClientInvoke = function(...)
+                if SpyActive then
+                    AddDevLog("RemoteFunction Invoked: "..v.Name)
+                end
+            end
+        end
+    end
+end)
+
+-- Spy على الأحداث
+BtnSpyEvents.MouseButton1Click:Connect(function()
+    AddDevLog("تشغيل Spy على الأحداث…")
+    SpyActive = true
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BindableEvent") then
+            v.Event:Connect(function(...)
+                if SpyActive then
+                    AddDevLog("BindableEvent Fired: "..v.Name)
+                end
+            end)
+        end
+    end
+end)
+
+-- Spy على الفنكشنات
+BtnSpyFunctions.MouseButton1Click:Connect(function()
+    AddDevLog("تشغيل Spy على الفنكشنات…")
+    SpyActive = true
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BindableFunction") then
+            v.OnInvoke = function(...)
+                if SpyActive then
+                    AddDevLog("BindableFunction Invoked: "..v.Name)
+                end
+            end
+        end
+    end
+end)
+
+-- إيقاف Spy
+BtnStopSpy.MouseButton1Click:Connect(function()
+    SpyActive = false
+    AddDevLog("تم إيقاف الـ Spy")
+end)
+AddLabel("نظام اللوحات KD7", Page_Billboards)
+AddSpace(Page_Billboards)
+
+local BillboardTextBox = AddBox("نص اللوحة", Page_Billboards)
+AddSpace(Page_Billboards)
+
+local BtnBillSelf = AddButton("لوحة فوق اللاعب", Page_Billboards)
+local BtnBillTarget = AddButton("لوحة فوق الضحية", Page_Billboards)
+local BtnBillMove = AddButton("لوحة متحركة", Page_Billboards)
+local BtnBillID = AddButton("لوحة ID اللاعب", Page_Billboards)
+local BtnBillRemove = AddButton("إزالة اللوحات", Page_Billboards)
+
+AddSpace(Page_Billboards)
+AddLabel("لوق اللوحات", Page_Billboards)
+
+local BillLog = Instance.new("ScrollingFrame")
+BillLog.Name = "BillLog"
+BillLog.Parent = Page_Billboards
+BillLog.Size = UDim2.new(1, -20, 0, 150)
+BillLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+BillLog.BackgroundTransparency = 0.25
+BillLog.ScrollBarThickness = 4
+BillLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local BillLogCorner = Instance.new("UICorner", BillLog)
+BillLogCorner.CornerRadius = UDim.new(0, 10)
+
+local BillLogStroke = Instance.new("UIStroke", BillLog)
+BillLogStroke.Thickness = 2
+BillLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local BillLogList = Instance.new("UIListLayout", BillLog)
+BillLogList.Padding = UDim.new(0, 4)
+BillLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddBillLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = BillLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function CreateBillboard(target, text)
+    if not target or not target.Character or not target.Character:FindFirstChild("Head") then
+        AddBillLog("لا يمكن إنشاء لوحة")
+        return
+    end
+
+    local bb = Instance.new("BillboardGui")
+    bb.Parent = target.Character.Head
+    bb.Size = UDim2.new(0, 200, 0, 50)
+    bb.Adornee = target.Character.Head
+    bb.AlwaysOnTop = true
+
+    local label = Instance.new("TextLabel", bb)
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Font = Enum.Font.GothamBold
+    label.TextScaled = true
+    label.TextColor3 = Color3.fromRGB(255,255,255)
+    label.Text = text
+
+    return bb
+end
+
+-- لوحة فوق اللاعب
+BtnBillSelf.MouseButton1Click:Connect(function()
+    local text = BillboardTextBox.Text
+    if text == "" then text = lp.Name end
+
+    CreateBillboard(lp, text)
+    AddBillLog("تم إنشاء لوحة فوق اللاعب")
+end)
+
+-- لوحة فوق الضحية
+BtnBillTarget.MouseButton1Click:Connect(function()
+    local text = BillboardTextBox.Text
+    if text == "" then text = "Target" end
+
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target then
+        AddBillLog("لا يوجد ضحية")
+        return
+    end
+
+    CreateBillboard(target, text)
+    AddBillLog("تم إنشاء لوحة فوق الضحية: "..target.Name)
+end)
+
+-- لوحة متحركة
+BtnBillMove.MouseButton1Click:Connect(function()
+    local text = BillboardTextBox.Text
+    if text == "" then text = "KD7 Moving" end
+
+    local bb = CreateBillboard(lp, text)
+    if not bb then return end
+
+    AddBillLog("لوحة متحركة شغالة")
+
+    spawn(function()
+        while bb.Parent do
+            task.wait()
+            bb.StudsOffset = Vector3.new(0, math.random(2,5), 0)
+        end
+    end)
+end)
+
+-- لوحة ID اللاعب
+BtnBillID.MouseButton1Click:Connect(function()
+    local id = lp.UserId
+    CreateBillboard(lp, "ID: "..id)
+    AddBillLog("تم إنشاء لوحة ID")
+end)
+
+-- إزالة اللوحات
+BtnBillRemove.MouseButton1Click:Connect(function()
+    for _, v in pairs(lp.Character:GetDescendants()) do
+        if v:IsA("BillboardGui") then
+            v:Destroy()
+        end
+    end
+    AddBillLog("تم إزالة جميع اللوحات")
+end)
+AddLabel("نظام الأدوات KD7", Page_Tools)
+AddSpace(Page_Tools)
+
+local ToolNameBox = AddBox("اسم التول", Page_Tools)
+AddSpace(Page_Tools)
+
+local BtnGiveTool = AddButton("إعطاء تول", Page_Tools)
+local BtnRemoveTool = AddButton("حذف تول", Page_Tools)
+local BtnActivateTool = AddButton("تفعيل التول", Page_Tools)
+local BtnMoveTool = AddButton("تول متحرك", Page_Tools)
+local BtnTargetTool = AddButton("تول الضحية", Page_Tools)
+local BtnToolsStop = AddButton("إيقاف نظام الأدوات", Page_Tools)
+
+AddSpace(Page_Tools)
+AddLabel("لوق الأدوات", Page_Tools)
+
+local ToolsLog = Instance.new("ScrollingFrame")
+ToolsLog.Name = "ToolsLog"
+ToolsLog.Parent = Page_Tools
+ToolsLog.Size = UDim2.new(1, -20, 0, 150)
+ToolsLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ToolsLog.BackgroundTransparency = 0.25
+ToolsLog.ScrollBarThickness = 4
+ToolsLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ToolsLogCorner = Instance.new("UICorner", ToolsLog)
+ToolsLogCorner.CornerRadius = UDim.new(0, 10)
+
+local ToolsLogStroke = Instance.new("UIStroke", ToolsLog)
+ToolsLogStroke.Thickness = 2
+ToolsLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ToolsLogList = Instance.new("UIListLayout", ToolsLog)
+ToolsLogList.Padding = UDim.new(0, 4)
+ToolsLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddToolsLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ToolsLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- إعطاء تول
+BtnGiveTool.MouseButton1Click:Connect(function()
+    local name = ToolNameBox.Text
+    if name == "" then
+        AddToolsLog("لم يتم إدخال اسم التول")
+        return
+    end
+
+    local tool = Instance.new("Tool")
+    tool.Name = name
+    tool.RequiresHandle = false
+    tool.Parent = lp.Backpack
+
+    AddToolsLog("تم إعطاء تول: "..name)
+end)
+
+-- حذف تول
+BtnRemoveTool.MouseButton1Click:Connect(function()
+    local name = ToolNameBox.Text
+    if name == "" then
+        AddToolsLog("لم يتم إدخال اسم التول")
+        return
+    end
+
+    for _, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA("Tool") and string.lower(v.Name) == string.lower(name) then
+            v:Destroy()
+            AddToolsLog("تم حذف التول: "..name)
+            return
+        end
+    end
+
+    AddToolsLog("التول غير موجود")
+end)
+
+-- تفعيل تول
+BtnActivateTool.MouseButton1Click:Connect(function()
+    local name = ToolNameBox.Text
+    if name == "" then
+        AddToolsLog("لم يتم إدخال اسم التول")
+        return
+    end
+
+    for _, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA("Tool") and string.lower(v.Name) == string.lower(name) then
+            lp.Character.Humanoid:EquipTool(v)
+            AddToolsLog("تم تفعيل التول: "..name)
+            return
+        end
+    end
+
+    AddToolsLog("التول غير موجود")
+end)
+
+-- تول متحرك
+BtnMoveTool.MouseButton1Click:Connect(function()
+    local name = ToolNameBox.Text
+    if name == "" then
+        AddToolsLog("لم يتم إدخال اسم التول")
+        return
+    end
+
+    local tool = nil
+    for _, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA("Tool") and string.lower(v.Name) == string.lower(name) then
+            tool = v
+            break
+        end
+    end
+
+    if not tool then
+        AddToolsLog("التول غير موجود")
+        return
+    end
+
+    AddToolsLog("تول متحرك شغّال")
+
+    spawn(function()
+        while tool.Parent do
+            task.wait()
+            tool.GripPos = Vector3.new(math.random(-2,2), math.random(-2,2), math.random(-2,2))
+        end
+    end)
+end)
+
+-- تول الضحية
+BtnTargetTool.MouseButton1Click:Connect(function()
+    local name = ToolNameBox.Text
+    if name == "" then
+        AddToolsLog("لم يتم إدخال اسم التول")
+        return
+    end
+
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target or not target.Character then
+        AddToolsLog("لا يوجد ضحية")
+        return
+    end
+
+    local tool = Instance.new("Tool")
+    tool.Name = name
+    tool.RequiresHandle = false
+    tool.Parent = target.Backpack
+
+    AddToolsLog("تم إعطاء تول للضحية: "..target.Name)
+end)
+
+-- إيقاف نظام الأدوات
+BtnToolsStop.MouseButton1Click:Connect(function()
+    AddToolsLog("تم إيقاف نظام الأدوات")
+end)
+AddLabel("نظام السكوتر KD7", Page_Scooter)
+AddSpace(Page_Scooter)
+
+local BtnScooterOn = AddButton("تشغيل السكوتر", Page_Scooter)
+local BtnScooterOff = AddButton("إيقاف السكوتر", Page_Scooter)
+local BtnScooterSpeedUp = AddButton("زيادة سرعة السكوتر", Page_Scooter)
+local BtnScooterSpeedDown = AddButton("خفض سرعة السكوتر", Page_Scooter)
+local BtnScooterSong = AddButton("تشغيل أغنية", Page_Scooter)
+local BtnScooterDetect = AddButton("كشف الأشياء تحت اللاعب", Page_Scooter)
+
+AddSpace(Page_Scooter)
+AddLabel("لوق السكوتر", Page_Scooter)
+
+local ScooterLog = Instance.new("ScrollingFrame")
+ScooterLog.Name = "ScooterLog"
+ScooterLog.Parent = Page_Scooter
+ScooterLog.Size = UDim2.new(1, -20, 0, 150)
+ScooterLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ScooterLog.BackgroundTransparency = 0.25
+ScooterLog.ScrollBarThickness = 4
+ScooterLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ScooterLogCorner = Instance.new("UICorner", ScooterLog)
+ScooterLogCorner.CornerRadius = UDim.new(0, 10)
+
+local ScooterLogStroke = Instance.new("UIStroke", ScooterLog)
+ScooterLogStroke.Thickness = 2
+ScooterLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ScooterLogList = Instance.new("UIListLayout", ScooterLog)
+ScooterLogList.Padding = UDim.new(0, 4)
+ScooterLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddScooterLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ScooterLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local ScooterActive = false
+local ScooterSpeed = 3
+local ScooterSound = nil
+
+-- تشغيل السكوتر
+BtnScooterOn.MouseButton1Click:Connect(function()
+    ScooterActive = true
+    AddScooterLog("تم تشغيل السكوتر")
+
+    spawn(function()
+        while ScooterActive do
+            task.wait()
+            local char = lp.Character
+            if char then
+                char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0, 0, -ScooterSpeed))
+            end
+        end
+    end)
+end)
+
+-- إيقاف السكوتر
+BtnScooterOff.MouseButton1Click:Connect(function()
+    ScooterActive = false
+    AddScooterLog("تم إيقاف السكوتر")
+end)
+
+-- زيادة السرعة
+BtnScooterSpeedUp.MouseButton1Click:Connect(function()
+    ScooterSpeed = ScooterSpeed + 1
+    AddScooterLog("زيادة سرعة السكوتر إلى: "..ScooterSpeed)
+end)
+
+-- خفض السرعة
+BtnScooterSpeedDown.MouseButton1Click:Connect(function()
+    ScooterSpeed = math.max(1, ScooterSpeed - 1)
+    AddScooterLog("خفض سرعة السكوتر إلى: "..ScooterSpeed)
+end)
+
+-- تشغيل أغنية
+BtnScooterSong.MouseButton1Click:Connect(function()
+    AddScooterLog("تشغيل أغنية على السكوتر")
+
+    local char = lp.Character
+    if not char then return end
+
+    if ScooterSound then
+        ScooterSound:Destroy()
+    end
+
+    ScooterSound = Instance.new("Sound", char.PrimaryPart)
+    ScooterSound.SoundId = "rbxassetid://1843529274" -- تقدر تغيّرها
+    ScooterSound.Volume = 3
+    ScooterSound.Looped = true
+    ScooterSound:Play()
+end)
+
+-- كشف الأشياء تحت اللاعب
+BtnScooterDetect.MouseButton1Click:Connect(function()
+    AddScooterLog("كشف الأشياء تحت اللاعب شغّال")
+
+    spawn(function()
+        while BtnScooterDetect.Parent do
+            task.wait(0.2)
+            local char = lp.Character
+            if char then
+                local ray = Ray.new(char.PrimaryPart.Position, Vector3.new(0, -5, 0))
+                local part = workspace:FindPartOnRay(ray, char)
+
+                if part then
+                    AddScooterLog("تحتك: "..part.Name)
+                end
+            end
+        end
+    end)
+end)
+AddLabel("نظام الأسلحة KD7", Page_Weapons)
+AddSpace(Page_Weapons)
+
+local WeaponNameBox = AddBox("اسم السلاح", Page_Weapons)
+AddSpace(Page_Weapons)
+
+local BtnGiveGun = AddButton("إعطاء سلاح", Page_Weapons)
+local BtnRemoveGun = AddButton("حذف سلاح", Page_Weapons)
+local BtnShootGun = AddButton("إطلاق النار", Page_Weapons)
+local BtnThrowGun = AddButton("رمي السلاح", Page_Weapons)
+local BtnGrenade = AddButton("قنبلة", Page_Weapons)
+local BtnLaser = AddButton("ليزر", Page_Weapons)
+local BtnWeaponsStop = AddButton("إيقاف نظام الأسلحة", Page_Weapons)
+
+AddSpace(Page_Weapons)
+AddLabel("لوق الأسلحة", Page_Weapons)
+
+local WeaponsLog = Instance.new("ScrollingFrame")
+WeaponsLog.Name = "WeaponsLog"
+WeaponsLog.Parent = Page_Weapons
+WeaponsLog.Size = UDim2.new(1, -20, 0, 150)
+WeaponsLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+WeaponsLog.BackgroundTransparency = 0.25
+WeaponsLog.ScrollBarThickness = 4
+WeaponsLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local WeaponsLogCorner = Instance.new("UICorner", WeaponsLog)
+WeaponsLogCorner.CornerRadius = UDim.new(0, 10)
+
+local WeaponsLogStroke = Instance.new("UIStroke", WeaponsLog)
+WeaponsLogStroke.Thickness = 2
+WeaponsLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local WeaponsLogList = Instance.new("UIListLayout", WeaponsLog)
+WeaponsLogList.Padding = UDim.new(0, 4)
+WeaponsLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddWeaponsLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = WeaponsLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- إعطاء سلاح
+BtnGiveGun.MouseButton1Click:Connect(function()
+    local name = WeaponNameBox.Text
+    if name == "" then
+        AddWeaponsLog("لم يتم إدخال اسم السلاح")
+        return
+    end
+
+    local gun = Instance.new("Tool")
+    gun.Name = name
+    gun.RequiresHandle = true
+
+    local handle = Instance.new("Part")
+    handle.Name = "Handle"
+    handle.Size = Vector3.new(1,1,2)
+    handle.Color = Color3.fromRGB(50,50,50)
+    handle.Parent = gun
+
+    gun.Parent = lp.Backpack
+
+    AddWeaponsLog("تم إعطاء سلاح: "..name)
+end)
+
+-- حذف سلاح
+BtnRemoveGun.MouseButton1Click:Connect(function()
+    local name = WeaponNameBox.Text
+    if name == "" then
+        AddWeaponsLog("لم يتم إدخال اسم السلاح")
+        return
+    end
+
+    for _, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA("Tool") and string.lower(v.Name) == string.lower(name) then
+            v:Destroy()
+            AddWeaponsLog("تم حذف السلاح: "..name)
+            return
+        end
+    end
+
+    AddWeaponsLog("السلاح غير موجود")
+end)
+
+-- إطلاق النار
+BtnShootGun.MouseButton1Click:Connect(function()
+    AddWeaponsLog("إطلاق النار شغّال")
+
+    local char = lp.Character
+    if not char then return end
+
+    spawn(function()
+        for i = 1, 10 do
+            task.wait(0.1)
+            local bullet = Instance.new("Part")
+            bullet.Size = Vector3.new(0.3,0.3,0.3)
+            bullet.Shape = Enum.PartType.Ball
+            bullet.Color = Color3.fromRGB(255,0,0)
+            bullet.Position = char.PrimaryPart.Position + char.PrimaryPart.CFrame.LookVector * 2
+            bullet.Parent = workspace
+
+            local bv = Instance.new("BodyVelocity", bullet)
+            bv.Velocity = char.PrimaryPart.CFrame.LookVector * 150
+            bv.MaxForce = Vector3.new(1e5,1e5,1e5)
+
+            game.Debris:AddItem(bullet, 3)
+        end
+    end)
+end)
+
+-- رمي السلاح
+BtnThrowGun.MouseButton1Click:Connect(function()
+    AddWeaponsLog("رمي السلاح")
+
+    local name = WeaponNameBox.Text
+    if name == "" then return end
+
+    for _, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA("Tool") and string.lower(v.Name) == string.lower(name) then
+            v.Parent = workspace
+            v.Handle.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,2,0)
+
+            local bv = Instance.new("BodyVelocity", v.Handle)
+            bv.Velocity = Vector3.new(0,20,0)
+            bv.MaxForce = Vector3.new(1e5,1e5,1e5)
+
+            AddWeaponsLog("تم رمي السلاح: "..name)
+            return
+        end
+    end
+
+    AddWeaponsLog("السلاح غير موجود")
+end)
+
+-- قنبلة
+BtnGrenade.MouseButton1Click:Connect(function()
+    AddWeaponsLog("قنبلة شغّالة")
+
+    local char = lp.Character
+    if not char then return end
+
+    local bomb = Instance.new("Part")
+    bomb.Size = Vector3.new(1,1,1)
+    bomb.Shape = Enum.PartType.Ball
+    bomb.Color = Color3.fromRGB(0,0,0)
+    bomb.Position = char.PrimaryPart.Position + Vector3.new(0,2,0)
+    bomb.Parent = workspace
+
+    local bv = Instance.new("BodyVelocity", bomb)
+    bv.Velocity = Vector3.new(0,30,0)
+    bv.MaxForce = Vector3.new(1e5,1e5,1e5)
+
+    task.wait(2)
+
+    local explosion = Instance.new("Explosion")
+    explosion.Position = bomb.Position
+    explosion.BlastRadius = 10
+    explosion.Parent = workspace
+
+    bomb:Destroy()
+end)
+
+-- ليزر
+BtnLaser.MouseButton1Click:Connect(function()
+    AddWeaponsLog("تشغيل الليزر")
+
+    local char = lp.Character
+    if not char then return end
+
+    spawn(function()
+        for i = 1, 20 do
+            task.wait(0.1)
+            local laser = Instance.new("Part")
+            laser.Size = Vector3.new(0.2,0.2,4)
+            laser.Color = Color3.fromRGB(0,255,0)
+            laser.Anchored = true
+            laser.CFrame = char.PrimaryPart.CFrame * CFrame.new(0,0,-4)
+            laser.Parent = workspace
+
+            game.Debris:AddItem(laser, 0.2)
+        end
+    end)
+end)
+
+-- إيقاف نظام الأسلحة
+BtnWeaponsStop.MouseButton1Click:Connect(function()
+    AddWeaponsLog("تم إيقاف نظام الأسلحة")
+end)
+AddLabel("نظام لايق السيرفر KD7", Page_ServerLag)
+AddSpace(Page_ServerLag)
+
+local BtnSpawnAllTools = AddButton("سباون كل التول بالماب", Page_ServerLag)
+local BtnGiveAllTools  = AddButton("سحب كل التول للاعب", Page_ServerLag)
+local BtnSpawnAllItems = AddButton("سباون كل المعدات والأشياء", Page_ServerLag)
+local BtnClearSpawns   = AddButton("حذف كل الأشياء المسبونة", Page_ServerLag)
+
+AddSpace(Page_ServerLag)
+AddLabel("لوق لايق السيرفر", Page_ServerLag)
+
+local LagLog = Instance.new("ScrollingFrame")
+LagLog.Name = "LagLog"
+LagLog.Parent = Page_ServerLag
+LagLog.Size = UDim2.new(1, -20, 0, 150)
+LagLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+LagLog.BackgroundTransparency = 0.25
+LagLog.ScrollBarThickness = 4
+LagLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local LagLogCorner = Instance.new("UICorner", LagLog)
+LagLogCorner.CornerRadius = UDim.new(0, 10)
+
+local LagLogStroke = Instance.new("UIStroke", LagLog)
+LagLogStroke.Thickness = 2
+LagLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local LagLogList = Instance.new("UIListLayout", LagLog)
+LagLogList.Padding = UDim.new(0, 4)
+LagLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddLagLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = LagLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- جدول نخزن فيه الأشياء اللي سبونّاها عشان نقدر نحذفها
+local SpawnedStuff = {}
+
+-- سباون كل التول اللي بالماب (كل Tool في workspace)
+BtnSpawnAllTools.MouseButton1Click:Connect(function()
+    AddLagLog("سباون كل التول بالماب حوالين اللاعب…")
+
+    local char = lp.Character
+    if not char or not char.PrimaryPart then
+        AddLagLog("ما قدرنا نحدد مكان اللاعب")
+        return
+    end
+
+    local basePos = char.PrimaryPart.Position
+    local offset = 0
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Tool") then
+            local clone = v:Clone()
+            clone.Parent = workspace
+            if clone:FindFirstChild("Handle") then
+                clone.Handle.CFrame = CFrame.new(basePos + Vector3.new(offset, 2, 0))
+            end
+            table.insert(SpawnedStuff, clone)
+            offset = offset + 3
+            AddLagLog("سباون تول: "..v.Name)
+        end
+    end
+
+    AddLagLog("انتهى سباون كل التول")
+end)
+
+-- سحب كل التول للاعب (كل Tool في workspace أو Backpackات ثانية)
+BtnGiveAllTools.MouseButton1Click:Connect(function()
+    AddLagLog("سحب كل التول للاعب…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Tool") then
+            v.Parent = lp.Backpack
+            AddLagLog("سحب تول: "..v.Name)
+        end
+    end
+
+    AddLagLog("انتهى سحب كل التول")
+end)
+
+-- سباون كل المعدات والأشياء (Models / Parts) في الماب حوالين اللاعب
+BtnSpawnAllItems.MouseButton1Click:Connect(function()
+    AddLagLog("سباون كل المعدات والأشياء حوالين اللاعب…")
+
+    local char = lp.Character
+    if not char or not char.PrimaryPart then
+        AddLagLog("ما قدرنا نحدد مكان اللاعب")
+        return
+    end
+
+    local basePos = char.PrimaryPart.Position
+    local ringRadius = 15
+    local angleStep = 15
+    local angle = 0
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Model") or v:IsA("Part") then
+            -- نتجنب أشياء الهب نفسه
+            if v ~= MainFrame and not v:IsDescendantOf(MainFrame) then
+                local clone = v:Clone()
+                clone.Parent = workspace
+
+                local x = basePos.X + math.cos(math.rad(angle)) * ringRadius
+                local z = basePos.Z + math.sin(math.rad(angle)) * ringRadius
+                local y = basePos.Y + 2
+
+                if clone:IsA("Model") and clone.PrimaryPart then
+                    clone:SetPrimaryPartCFrame(CFrame.new(x, y, z))
+                elseif clone:IsA("Part") then
+                    clone.CFrame = CFrame.new(x, y, z)
+                end
+
+                table.insert(SpawnedStuff, clone)
+                AddLagLog("سباون شيء: "..v.Name)
+
+                angle = angle + angleStep
+            end
+        end
+    end
+
+    AddLagLog("انتهى سباون كل المعدات والأشياء")
+end)
+
+-- حذف كل الأشياء اللي سبونّاها
+BtnClearSpawns.MouseButton1Click:Connect(function()
+    AddLagLog("حذف كل الأشياء المسبونة…")
+
+    for _, obj in pairs(SpawnedStuff) do
+        if obj and obj.Parent then
+            obj:Destroy()
+        end
+    end
+
+    SpawnedStuff = {}
+    AddLagLog("تم حذف كل الأشياء المسبونة")
+end)
+AddLabel("نظام الطيران KD7", Page_Fly)
+AddSpace(Page_Fly)
+
+local BtnFlyOn = AddButton("تشغيل الطيران", Page_Fly)
+local BtnFlyOff = AddButton("إيقاف الطيران", Page_Fly)
+local BtnFlySpeedUp = AddButton("زيادة سرعة الطيران", Page_Fly)
+local BtnFlySpeedDown = AddButton("خفض سرعة الطيران", Page_Fly)
+local BtnFlyUp = AddButton("رفع اللاعب للأعلى", Page_Fly)
+local BtnFlyDown = AddButton("تنزيل اللاعب للأسفل", Page_Fly)
+local BtnFlyR6 = AddButton("طيران R6", Page_Fly)
+local BtnFlyR15 = AddButton("طيران R15", Page_Fly)
+
+AddSpace(Page_Fly)
+AddLabel("لوق الطيران", Page_Fly)
+
+local FlyLog = Instance.new("ScrollingFrame")
+FlyLog.Name = "FlyLog"
+FlyLog.Parent = Page_Fly
+FlyLog.Size = UDim2.new(1, -20, 0, 150)
+FlyLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+FlyLog.BackgroundTransparency = 0.25
+FlyLog.ScrollBarThickness = 4
+FlyLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local FlyLogCorner = Instance.new("UICorner", FlyLog)
+FlyLogCorner.CornerRadius = UDim.new(0, 10)
+
+local FlyLogStroke = Instance.new("UIStroke", FlyLog)
+FlyLogStroke.Thickness = 2
+FlyLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local FlyLogList = Instance.new("UIListLayout", FlyLog)
+FlyLogList.Padding = UDim.new(0, 4)
+FlyLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddFlyLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = FlyLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local FlyActive = false
+local FlySpeed = 3
+local FlyHeight = 0
+
+BtnFlyOn.MouseButton1Click:Connect(function()
+    FlyActive = true
+    AddFlyLog("تم تشغيل الطيران")
+
+    spawn(function()
+        while FlyActive do
+            task.wait()
+            local char = lp.Character
+            if char then
+                char:SetPrimaryPartCFrame(
+                    char.PrimaryPart.CFrame 
+                    * CFrame.new(0, FlyHeight, -FlySpeed)
+                )
+            end
+        end
+    end)
+end)
+
+BtnFlyOff.MouseButton1Click:Connect(function()
+    FlyActive = false
+    AddFlyLog("تم إيقاف الطيران")
+end)
+
+BtnFlySpeedUp.MouseButton1Click:Connect(function()
+    FlySpeed = FlySpeed + 1
+    AddFlyLog("زيادة سرعة الطيران إلى: "..FlySpeed)
+end)
+
+BtnFlySpeedDown.MouseButton1Click:Connect(function()
+    FlySpeed = math.max(1, FlySpeed - 1)
+    AddFlyLog("خفض سرعة الطيران إلى: "..FlySpeed)
+end)
+
+BtnFlyUp.MouseButton1Click:Connect(function()
+    FlyHeight = FlyHeight + 1
+    AddFlyLog("رفع اللاعب للأعلى: "..FlyHeight)
+end)
+
+BtnFlyDown.MouseButton1Click:Connect(function()
+    FlyHeight = FlyHeight - 1
+    AddFlyLog("تنزيل اللاعب للأسفل: "..FlyHeight)
+end)
+
+BtnFlyR6.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char then
+        char.Humanoid.RigType = Enum.HumanoidRigType.R6
+        AddFlyLog("تم تفعيل طيران R6")
+    end
+end)
+
+BtnFlyR15.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char then
+        char.Humanoid.RigType = Enum.HumanoidRigType.R15
+        AddFlyLog("تم تفعيل طيران R15")
+    end
+end)
+AddLabel("نظام اللايق الضخم KD7", Page_MegaLag)
+AddSpace(Page_MegaLag)
+
+local BtnExplodeMap = AddButton("تفجير الماب كامل", Page_MegaLag)
+local BtnSpawn1000Parts = AddButton("سباون 1000 قطعة", Page_MegaLag)
+local BtnSpawn1000Tools = AddButton("سباون 1000 تول", Page_MegaLag)
+local BtnCloneAllModels = AddButton("تكرار كل الموديلات", Page_MegaLag)
+local BtnCloneAllTools = AddButton("تكرار كل التول", Page_MegaLag)
+local BtnClearMega = AddButton("مسح كل الأشياء المسبونة", Page_MegaLag)
+
+AddSpace(Page_MegaLag)
+AddLabel("لوق اللايق الضخم", Page_MegaLag)
+
+local MegaLog = Instance.new("ScrollingFrame")
+MegaLog.Name = "MegaLog"
+MegaLog.Parent = Page_MegaLag
+MegaLog.Size = UDim2.new(1, -20, 0, 150)
+MegaLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+MegaLog.BackgroundTransparency = 0.25
+MegaLog.ScrollBarThickness = 4
+MegaLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local MegaLogCorner = Instance.new("UICorner", MegaLog)
+MegaLogCorner.CornerRadius = UDim.new(0, 10)
+
+local MegaLogStroke = Instance.new("UIStroke", MegaLog)
+MegaLogStroke.Thickness = 2
+MegaLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local MegaLogList = Instance.new("UIListLayout", MegaLog)
+MegaLogList.Padding = UDim.new(0, 4)
+MegaLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddMegaLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = MegaLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedMega = {}
+
+-- تفجير الماب كامل
+BtnExplodeMap.MouseButton1Click:Connect(function()
+    AddMegaLog("تفجير الماب كامل…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            local ex = Instance.new("Explosion")
+            ex.Position = v.Position
+            ex.BlastRadius = 10
+            ex.Parent = workspace
+        end
+    end
+
+    AddMegaLog("تم التفجير")
+end)
+
+-- سباون 1000 قطعة
+BtnSpawn1000Parts.MouseButton1Click:Connect(function()
+    AddMegaLog("سباون 1000 قطعة…")
+
+    local char = lp.Character
+    if not char then return end
+
+    for i = 1, 1000 do
+        local p = Instance.new("Part")
+        p.Size = Vector3.new(2,2,2)
+        p.Color = Color3.fromRGB(math.random(0,255), math.random(0,255), math.random(0,255))
+        p.Position = char.PrimaryPart.Position + Vector3.new(math.random(-50,50), math.random(5,30), math.random(-50,50))
+        p.Parent = workspace
+        table.insert(SpawnedMega, p)
+    end
+
+    AddMegaLog("تم سباون 1000 قطعة")
+end)
+
+-- سباون 1000 تول
+BtnSpawn1000Tools.MouseButton1Click:Connect(function()
+    AddMegaLog("سباون 1000 تول…")
+
+    local char = lp.Character
+    if not char then return end
+
+    for i = 1, 1000 do
+        local tool = Instance.new("Tool")
+        tool.Name = "KD7Tool_"..i
+        tool.RequiresHandle = true
+
+        local handle = Instance.new("Part")
+        handle.Name = "Handle"
+        handle.Size = Vector3.new(1,1,2)
+        handle.Color = Color3.fromRGB(255,0,0)
+        handle.Parent = tool
+
+        tool.Parent = workspace
+        handle.Position = char.PrimaryPart.Position + Vector3.new(math.random(-20,20), 3, math.random(-20,20))
+
+        table.insert(SpawnedMega, tool)
+    end
+
+    AddMegaLog("تم سباون 1000 تول")
+end)
+
+-- تكرار كل الموديلات
+BtnCloneAllModels.MouseButton1Click:Connect(function()
+    AddMegaLog("تكرار كل الموديلات…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Model") and v.PrimaryPart then
+            local clone = v:Clone()
+            clone.Parent = workspace
+            clone:SetPrimaryPartCFrame(v.PrimaryPart.CFrame + Vector3.new(0,5,0))
+            table.insert(SpawnedMega, clone)
+        end
+    end
+
+    AddMegaLog("تم تكرار كل الموديلات")
+end)
+
+-- تكرار كل التول
+BtnCloneAllTools.MouseButton1Click:Connect(function()
+    AddMegaLog("تكرار كل التول…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Tool") then
+            local clone = v:Clone()
+            clone.Parent = workspace
+            table.insert(SpawnedMega, clone)
+        end
+    end
+
+    AddMegaLog("تم تكرار كل التول")
+end)
+
+-- مسح كل الأشياء المسبونة
+BtnClearMega.MouseButton1Click:Connect(function()
+    AddMegaLog("مسح كل الأشياء المسبونة…")
+
+    for _, obj in pairs(SpawnedMega) do
+        if obj and obj.Parent then
+            obj:Destroy()
+        end
+    end
+
+    SpawnedMega = {}
+    AddMegaLog("تم المسح الكامل")
+end)
+AddLabel("نظام التحكم باللاعبين KD7", Page_Players)
+AddSpace(Page_Players)
+
+local TargetBox = AddBox("اسم اللاعب", Page_Players)
+AddSpace(Page_Players)
+
+local BtnFreeze = AddButton("تجميد اللاعب", Page_Players)
+local BtnUnfreeze = AddButton("إلغاء التجميد", Page_Players)
+local BtnLift = AddButton("رفع اللاعب للأعلى", Page_Players)
+local BtnSpin = AddButton("تدوير اللاعب", Page_Players)
+local BtnPull = AddButton("سحب اللاعب إليك", Page_Players)
+local BtnPush = AddButton("دفع اللاعب بعيد", Page_Players)
+local BtnFlip = AddButton("قلب اللاعب", Page_Players)
+local BtnStopControl = AddButton("إيقاف التحكم", Page_Players)
+
+AddSpace(Page_Players)
+AddLabel("لوق التحكم باللاعبين", Page_Players)
+
+local PLog = Instance.new("ScrollingFrame")
+PLog.Name = "PLog"
+PLog.Parent = Page_Players
+PLog.Size = UDim2.new(1, -20, 0, 150)
+PLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+PLog.BackgroundTransparency = 0.25
+PLog.ScrollBarThickness = 4
+PLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local PLogCorner = Instance.new("UICorner", PLog)
+PLogCorner.CornerRadius = UDim.new(0, 10)
+
+local PLogStroke = Instance.new("UIStroke", PLog)
+PLogStroke.Thickness = 2
+PLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local PLogList = Instance.new("UIListLayout", PLog)
+PLogList.Padding = UDim.new(0, 4)
+PLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddPLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = PLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function GetTarget(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+-- تجميد اللاعب
+BtnFreeze.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    for _, v in pairs(target.Character:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.Anchored = true
+        end
+    end
+
+    AddPLog("تم تجميد اللاعب: "..target.Name)
+end)
+
+-- إلغاء التجميد
+BtnUnfreeze.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    for _, v in pairs(target.Character:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.Anchored = false
+        end
+    end
+
+    AddPLog("تم إلغاء التجميد عن اللاعب: "..target.Name)
+end)
+
+-- رفع اللاعب للأعلى
+BtnLift.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    target.Character:SetPrimaryPartCFrame(
+        target.Character.PrimaryPart.CFrame * CFrame.new(0, 10, 0)
+    )
+
+    AddPLog("تم رفع اللاعب للأعلى")
+end)
+
+-- تدوير اللاعب
+BtnSpin.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    AddPLog("تدوير اللاعب شغّال")
+
+    spawn(function()
+        for i = 1, 60 do
+            task.wait(0.05)
+            target.Character:SetPrimaryPartCFrame(
+                target.Character.PrimaryPart.CFrame * CFrame.Angles(0, math.rad(15), 0)
+            )
+        end
+    end)
+end)
+
+-- سحب اللاعب إليك
+BtnPull.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    local char = lp.Character
+    if not char then return end
+
+    target.Character:SetPrimaryPartCFrame(
+        char.PrimaryPart.CFrame * CFrame.new(0, 0, -3)
+    )
+
+    AddPLog("تم سحب اللاعب إليك")
+end)
+
+-- دفع اللاعب بعيد
+BtnPush.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    local char = lp.Character
+    if not char then return end
+
+    target.Character:SetPrimaryPartCFrame(
+        char.PrimaryPart.CFrame * CFrame.new(0, 0, 10)
+    )
+
+    AddPLog("تم دفع اللاعب بعيد")
+end)
+
+-- قلب اللاعب
+BtnFlip.MouseButton1Click:Connect(function()
+    local name = TargetBox.Text
+    local target = GetTarget(name)
+    if not target or not target.Character then
+        AddPLog("اللاعب غير موجود")
+        return
+    end
+
+    target.Character:SetPrimaryPartCFrame(
+        target.Character.PrimaryPart.CFrame * CFrame.Angles(math.rad(180), 0, 0)
+    )
+
+    AddPLog("تم قلب اللاعب رأساً على عقب")
+end)
+
+-- إيقاف التحكم
+BtnStopControl.MouseButton1Click:Connect(function()
+    AddPLog("تم إيقاف نظام التحكم باللاعبين")
+end)
+AddLabel("نظام الوحوش KD7", Page_Monsters)
+AddSpace(Page_Monsters)
+
+local MonsterNameBox = AddBox("اسم الوحش", Page_Monsters)
+AddSpace(Page_Monsters)
+
+local BtnSpawnMonster = AddButton("سباون وحش", Page_Monsters)
+local BtnMonsterChase = AddButton("وحش يلاحق لاعب", Page_Monsters)
+local BtnMonsterKill = AddButton("وحش يقتل لاعب", Page_Monsters)
+local BtnMonsterFollowMe = AddButton("وحش يتبعك", Page_Monsters)
+local BtnMonsterFly = AddButton("وحش يطير", Page_Monsters)
+local BtnMonsterDelete = AddButton("حذف كل الوحوش", Page_Monsters)
+
+AddSpace(Page_Monsters)
+AddLabel("لوق الوحوش", Page_Monsters)
+
+local MLog = Instance.new("ScrollingFrame")
+MLog.Name = "MLog"
+MLog.Parent = Page_Monsters
+MLog.Size = UDim2.new(1, -20, 0, 150)
+MLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+MLog.BackgroundTransparency = 0.25
+MLog.ScrollBarThickness = 4
+MLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local MLogCorner = Instance.new("UICorner", MLog)
+MLogCorner.CornerRadius = UDim.new(0, 10)
+
+local MLogStroke = Instance.new("UIStroke", MLog)
+MLogStroke.Thickness = 2
+MLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local MLogList = Instance.new("UIListLayout", MLog)
+MLogList.Padding = UDim.new(0, 4)
+MLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddMLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = MLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedMonsters = {}
+
+-- سباون وحش
+BtnSpawnMonster.MouseButton1Click:Connect(function()
+    local name = MonsterNameBox.Text
+    if name == "" then name = "KD7Monster" end
+
+    local monster = Instance.new("Model")
+    monster.Name = name
+
+    local head = Instance.new("Part")
+    head.Name = "Head"
+    head.Size = Vector3.new(3,3,3)
+    head.Color = Color3.fromRGB(255,0,0)
+    head.Parent = monster
+
+    local hum = Instance.new("Humanoid")
+    hum.Parent = monster
+
+    monster.PrimaryPart = head
+    monster.Parent = workspace
+
+    head.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,5,0)
+
+    table.insert(SpawnedMonsters, monster)
+    AddMLog("تم سباون وحش: "..name)
+end)
+
+-- وحش يلاحق لاعب
+BtnMonsterChase.MouseButton1Click:Connect(function()
+    local name = MonsterNameBox.Text
+    if name == "" then name = "KD7Monster" end
+
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target or not target.Character then
+        AddMLog("لا يوجد لاعب للملاحقة")
+        return
+    end
+
+    AddMLog("وحش يلاحق اللاعب: "..target.Name)
+
+    spawn(function()
+        while true do
+            task.wait(0.1)
+            for _, monster in pairs(SpawnedMonsters) do
+                if monster.PrimaryPart then
+                    local pos = target.Character.PrimaryPart.Position
+                    monster:SetPrimaryPartCFrame(
+                        monster.PrimaryPart.CFrame:Lerp(
+                            CFrame.new(pos), 0.1
+                        )
+                    )
+                end
+            end
+        end
+    end)
+end)
+
+-- وحش يقتل لاعب
+BtnMonsterKill.MouseButton1Click:Connect(function()
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target or not target.Character then
+        AddMLog("لا يوجد لاعب للقتل")
+        return
+    end
+
+    AddMLog("وحش يقتل اللاعب: "..target.Name)
+
+    spawn(function()
+        while target.Character and target.Character:FindFirstChild("Humanoid") do
+            task.wait(0.1)
+            target.Character.Humanoid.Health = 0
+        end
+    end)
+end)
+
+-- وحش يتبعك
+BtnMonsterFollowMe.MouseButton1Click:Connect(function()
+    AddMLog("وحش يتبعك شغّال")
+
+    spawn(function()
+        while true do
+            task.wait(0.1)
+            for _, monster in pairs(SpawnedMonsters) do
+                if monster.PrimaryPart then
+                    local pos = lp.Character.PrimaryPart.Position
+                    monster:SetPrimaryPartCFrame(
+                        monster.PrimaryPart.CFrame:Lerp(
+                            CFrame.new(pos + Vector3.new(0,0,-5)), 0.1
+                        )
+                    )
+                end
+            end
+        end
+    end)
+end)
+
+-- وحش يطير
+BtnMonsterFly.MouseButton1Click:Connect(function()
+    AddMLog("وحش يطير شغّال")
+
+    spawn(function()
+        while true do
+            task.wait(0.1)
+            for _, monster in pairs(SpawnedMonsters) do
+                if monster.PrimaryPart then
+                    monster:SetPrimaryPartCFrame(
+                        monster.PrimaryPart.CFrame * CFrame.new(0, 0.5, 0)
+                    )
+                end
+            end
+        end
+    end)
+end)
+
+-- حذف كل الوحوش
+BtnMonsterDelete.MouseButton1Click:Connect(function()
+    AddMLog("حذف كل الوحوش…")
+
+    for _, monster in pairs(SpawnedMonsters) do
+        if monster and monster.Parent then
+            monster:Destroy()
+        end
+    end
+
+    SpawnedMonsters = {}
+    AddMLog("تم حذف كل الوحوش")
+end)
+AddLabel("نظام التحكم بالماب KD7", Page_World)
+AddSpace(Page_World)
+
+local BtnMoveMap = AddButton("تحريك الماب للأمام", Page_World)
+local BtnMoveMapBack = AddButton("تحريك الماب للخلف", Page_World)
+local BtnRotateMap = AddButton("تدوير الماب", Page_World)
+local BtnLiftMap = AddButton("رفع الماب للأعلى", Page_World)
+local BtnDropMap = AddButton("تنزيل الماب للأسفل", Page_World)
+local BtnFlipMap = AddButton("قلب الماب كامل", Page_World)
+local BtnDeleteParts = AddButton("حذف أجزاء معينة", Page_World)
+local BtnSpawnFullMap = AddButton("سباون نسخة كاملة من الماب", Page_World)
+
+AddSpace(Page_World)
+AddLabel("لوق التحكم بالماب", Page_World)
+
+local WLog = Instance.new("ScrollingFrame")
+WLog.Name = "WLog"
+WLog.Parent = Page_World
+WLog.Size = UDim2.new(1, -20, 0, 150)
+WLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+WLog.BackgroundTransparency = 0.25
+WLog.ScrollBarThickness = 4
+WLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local WLogCorner = Instance.new("UICorner", WLog)
+WLogCorner.CornerRadius = UDim.new(0, 10)
+
+local WLogStroke = Instance.new("UIStroke", WLog)
+WLogStroke.Thickness = 2
+WLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local WLogList = Instance.new("UIListLayout", WLog)
+WLogList.Padding = UDim.new(0, 4)
+WLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddWLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = WLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedMaps = {}
+
+-- تحريك الماب للأمام
+BtnMoveMap.MouseButton1Click:Connect(function()
+    AddWLog("تحريك الماب للأمام…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.new(0, 0, -10)
+        end
+    end
+end)
+
+-- تحريك الماب للخلف
+BtnMoveMapBack.MouseButton1Click:Connect(function()
+    AddWLog("تحريك الماب للخلف…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.new(0, 0, 10)
+        end
+    end
+end)
+
+-- تدوير الماب
+BtnRotateMap.MouseButton1Click:Connect(function()
+    AddWLog("تدوير الماب…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.Angles(0, math.rad(15), 0)
+        end
+    end
+end)
+
+-- رفع الماب للأعلى
+BtnLiftMap.MouseButton1Click:Connect(function()
+    AddWLog("رفع الماب للأعلى…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.new(0, 10, 0)
+        end
+    end
+end)
+
+-- تنزيل الماب للأسفل
+BtnDropMap.MouseButton1Click:Connect(function()
+    AddWLog("تنزيل الماب للأسفل…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.new(0, -10, 0)
+        end
+    end
+end)
+
+-- قلب الماب كامل
+BtnFlipMap.MouseButton1Click:Connect(function()
+    AddWLog("قلب الماب كامل…")
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CFrame = v.CFrame * CFrame.Angles(math.rad(180), 0, 0)
+        end
+    end
+end)
+
+-- حذف أجزاء معينة
+BtnDeleteParts.MouseButton1Click:Connect(function()
+    AddWLog("حذف أجزاء معينة…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Part") and v.Size.Magnitude < 3 then
+            v:Destroy()
+        end
+    end
+
+    AddWLog("تم حذف الأجزاء الصغيرة")
+end)
+
+-- سباون نسخة كاملة من الماب
+BtnSpawnFullMap.MouseButton1Click:Connect(function()
+    AddWLog("سباون نسخة كاملة من الماب…")
+
+    local cloneMap = Instance.new("Model")
+    cloneMap.Name = "KD7_ClonedMap"
+    cloneMap.Parent = workspace
+
+    for _, v in pairs(workspace:GetChildren()) do
+        if v:IsA("Model") or v:IsA("Part") then
+            local clone = v:Clone()
+            clone.Parent = cloneMap
+        end
+    end
+
+    table.insert(SpawnedMaps, cloneMap)
+    AddWLog("تم سباون نسخة كاملة من الماب")
+end)
+AddLabel("نظام الوقت والجو KD7", Page_TimeWeather)
+AddSpace(Page_TimeWeather)
+
+local TimeBox = AddBox("الوقت (0 - 24)", Page_TimeWeather)
+AddSpace(Page_TimeWeather)
+
+local BtnSetDay = AddButton("تحويل الجو إلى نهار", Page_TimeWeather)
+local BtnSetNight = AddButton("تحويل الجو إلى ليل", Page_TimeWeather)
+local BtnSetFog = AddButton("تفعيل الضباب", Page_TimeWeather)
+local BtnClearFog = AddButton("إزالة الضباب", Page_TimeWeather)
+local BtnRainOn = AddButton("تشغيل المطر", Page_TimeWeather)
+local BtnRainOff = AddButton("إيقاف المطر", Page_TimeWeather)
+local BtnSunOn = AddButton("تشغيل الشمس القوية", Page_TimeWeather)
+local BtnSunOff = AddButton("إيقاف الشمس القوية", Page_TimeWeather)
+local BtnSetTime = AddButton("تغيير الوقت", Page_TimeWeather)
+
+AddSpace(Page_TimeWeather)
+AddLabel("لوق الوقت والجو", Page_TimeWeather)
+
+local TWLog = Instance.new("ScrollingFrame")
+TWLog.Name = "TWLog"
+TWLog.Parent = Page_TimeWeather
+TWLog.Size = UDim2.new(1, -20, 0, 150)
+TWLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+TWLog.BackgroundTransparency = 0.25
+TWLog.ScrollBarThickness = 4
+TWLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local TWLogCorner = Instance.new("UICorner", TWLog)
+TWLogCorner.CornerRadius = UDim.new(0, 10)
+
+local TWLogStroke = Instance.new("UIStroke", TWLog)
+TWLogStroke.Thickness = 2
+TWLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local TWLogList = Instance.new("UIListLayout", TWLog)
+TWLogList.Padding = UDim.new(0, 4)
+TWLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddTWLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = TWLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local Lighting = game:GetService("Lighting")
+
+-- نهار
+BtnSetDay.MouseButton1Click:Connect(function()
+    Lighting.ClockTime = 14
+    Lighting.Brightness = 3
+    Lighting.FogEnd = 100000
+    AddTWLog("تم تحويل الجو إلى نهار")
+end)
+
+-- ليل
+BtnSetNight.MouseButton1Click:Connect(function()
+    Lighting.ClockTime = 0
+    Lighting.Brightness = 1
+    Lighting.FogEnd = 500
+    AddTWLog("تم تحويل الجو إلى ليل")
+end)
+
+-- تفعيل الضباب
+BtnSetFog.MouseButton1Click:Connect(function()
+    Lighting.FogStart = 0
+    Lighting.FogEnd = 50
+    Lighting.FogColor = Color3.fromRGB(200,200,200)
+    AddTWLog("تم تفعيل الضباب")
+end)
+
+-- إزالة الضباب
+BtnClearFog.MouseButton1Click:Connect(function()
+    Lighting.FogStart = 0
+    Lighting.FogEnd = 100000
+    AddTWLog("تم إزالة الضباب")
+end)
+
+-- تشغيل المطر
+BtnRainOn.MouseButton1Click:Connect(function()
+    AddTWLog("تشغيل المطر…")
+
+    local rain = Instance.new("ParticleEmitter")
+    rain.Name = "KD7Rain"
+    rain.Rate = 500
+    rain.Speed = NumberRange.new(50,70)
+    rain.Size = NumberSequence.new(0.2)
+    rain.Texture = "rbxassetid://243098098"
+    rain.Parent = workspace.Terrain
+
+    AddTWLog("تم تشغيل المطر")
+end)
+
+-- إيقاف المطر
+BtnRainOff.MouseButton1Click:Connect(function()
+    AddTWLog("إيقاف المطر…")
+
+    for _, v in pairs(workspace.Terrain:GetChildren()) do
+        if v.Name == "KD7Rain" then
+            v:Destroy()
+        end
+    end
+
+    AddTWLog("تم إيقاف المطر")
+end)
+
+-- تشغيل الشمس القوية
+BtnSunOn.MouseButton1Click:Connect(function()
+    Lighting.Brightness = 10
+    Lighting.ExposureCompensation = 1
+    AddTWLog("تم تشغيل الشمس القوية")
+end)
+
+-- إيقاف الشمس القوية
+BtnSunOff.MouseButton1Click:Connect(function()
+    Lighting.Brightness = 2
+    Lighting.ExposureCompensation = 0
+    AddTWLog("تم إيقاف الشمس القوية")
+end)
+
+-- تغيير الوقت
+BtnSetTime.MouseButton1Click:Connect(function()
+    local t = tonumber(TimeBox.Text)
+    if not t or t < 0 or t > 24 then
+        AddTWLog("الوقت غير صحيح")
+        return
+    end
+
+    Lighting.ClockTime = t
+    AddTWLog("تم تغيير الوقت إلى: "..t)
+end)
+AddLabel("نظام الصوت والموسيقى KD7", Page_Sound)
+AddSpace(Page_Sound)
+
+local MusicIDBox = AddBox("ID الأغنية", Page_Sound)
+AddSpace(Page_Sound)
+
+local BtnPlayMusic = AddButton("تشغيل الأغنية", Page_Sound)
+local BtnStopMusic = AddButton("إيقاف الأغنية", Page_Sound)
+local BtnVolumeUp = AddButton("رفع الصوت", Page_Sound)
+local BtnVolumeDown = AddButton("خفض الصوت", Page_Sound)
+local BtnSpawnSpeaker = AddButton("سباون سماعة", Page_Sound)
+local BtnGlobalMusic = AddButton("تشغيل أغنية عالمية", Page_Sound)
+local BtnStopGlobal = AddButton("إيقاف الأغنية العالمية", Page_Sound)
+
+AddSpace(Page_Sound)
+AddLabel("لوق الصوت والموسيقى", Page_Sound)
+
+local SLog = Instance.new("ScrollingFrame")
+SLog.Name = "SLog"
+SLog.Parent = Page_Sound
+SLog.Size = UDim2.new(1, -20, 0, 150)
+SLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+SLog.BackgroundTransparency = 0.25
+SLog.ScrollBarThickness = 4
+SLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local SLogCorner = Instance.new("UICorner", SLog)
+SLogCorner.CornerRadius = UDim.new(0, 10)
+
+local SLogStroke = Instance.new("UIStroke", SLog)
+SLogStroke.Thickness = 2
+SLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local SLogList = Instance.new("UIListLayout", SLog)
+SLogList.Padding = UDim.new(0, 4)
+SLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddSLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = SLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local LocalSound = nil
+local GlobalSound = nil
+
+-- تشغيل الأغنية
+BtnPlayMusic.MouseButton1Click:Connect(function()
+    local id = MusicIDBox.Text
+    if id == "" then
+        AddSLog("لم يتم إدخال ID الأغنية")
+        return
+    end
+
+    local char = lp.Character
+    if not char then return end
+
+    if LocalSound then
+        LocalSound:Destroy()
+    end
+
+    LocalSound = Instance.new("Sound", char.PrimaryPart)
+    LocalSound.SoundId = "rbxassetid://"..id
+    LocalSound.Volume = 3
+    LocalSound.Looped = true
+    LocalSound:Play()
+
+    AddSLog("تشغيل الأغنية: "..id)
+end)
+
+-- إيقاف الأغنية
+BtnStopMusic.MouseButton1Click:Connect(function()
+    if LocalSound then
+        LocalSound:Destroy()
+        LocalSound = nil
+        AddSLog("تم إيقاف الأغنية")
+    end
+end)
+
+-- رفع الصوت
+BtnVolumeUp.MouseButton1Click:Connect(function()
+    if LocalSound then
+        LocalSound.Volume = LocalSound.Volume + 1
+        AddSLog("رفع الصوت إلى: "..LocalSound.Volume)
+    end
+end)
+
+-- خفض الصوت
+BtnVolumeDown.MouseButton1Click:Connect(function()
+    if LocalSound then
+        LocalSound.Volume = math.max(0, LocalSound.Volume - 1)
+        AddSLog("خفض الصوت إلى: "..LocalSound.Volume)
+    end
+end)
+
+-- سباون سماعة
+BtnSpawnSpeaker.MouseButton1Click:Connect(function()
+    AddSLog("سباون سماعة…")
+
+    local speaker = Instance.new("Part")
+    speaker.Size = Vector3.new(2,2,2)
+    speaker.Color = Color3.fromRGB(0,0,0)
+    speaker.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,2,0)
+    speaker.Anchored = true
+    speaker.Name = "KD7Speaker"
+    speaker.Parent = workspace
+
+    local sound = Instance.new("Sound", speaker)
+    sound.SoundId = "rbxassetid://1843529274"
+    sound.Volume = 5
+    sound.Looped = true
+    sound:Play()
+
+    AddSLog("تم سباون سماعة وتشغيل أغنية عليها")
+end)
+
+-- تشغيل أغنية عالمية (تسمعها كل السيرفر)
+BtnGlobalMusic.MouseButton1Click:Connect(function()
+    local id = MusicIDBox.Text
+    if id == "" then id = "1843529274" end
+
+    AddSLog("تشغيل أغنية عالمية…")
+
+    if GlobalSound then
+        GlobalSound:Destroy()
+    end
+
+    GlobalSound = Instance.new("Sound", workspace)
+    GlobalSound.SoundId = "rbxassetid://"..id
+    GlobalSound.Volume = 5
+    GlobalSound.Looped = true
+    GlobalSound:Play()
+
+    AddSLog("تم تشغيل أغنية عالمية: "..id)
+end)
+
+-- إيقاف الأغنية العالمية
+BtnStopGlobal.MouseButton1Click:Connect(function()
+    if GlobalSound then
+        GlobalSound:Destroy()
+        GlobalSound = nil
+        AddSLog("تم إيقاف الأغنية العالمية")
+    end
+end)
+AddLabel("نظام التحكم بالكاميرا KD7", Page_Camera)
+AddSpace(Page_Camera)
+
+local TargetCamBox = AddBox("اسم اللاعب", Page_Camera)
+AddSpace(Page_Camera)
+
+local BtnCamRotate = AddButton("تدوير الكاميرا", Page_Camera)
+local BtnCamZoomIn = AddButton("تقريب الكاميرا", Page_Camera)
+local BtnCamZoomOut = AddButton("تبعيد الكاميرا", Page_Camera)
+local BtnCamOnPlayer = AddButton("كاميرا على لاعب", Page_Camera)
+local BtnCamStatic = AddButton("كاميرا ثابتة", Page_Camera)
+local BtnCamCinematic = AddButton("كاميرا سينمائية", Page_Camera)
+local BtnCamReset = AddButton("إعادة الكاميرا للوضع الطبيعي", Page_Camera)
+
+AddSpace(Page_Camera)
+AddLabel("لوق الكاميرا", Page_Camera)
+
+local CLog = Instance.new("ScrollingFrame")
+CLog.Name = "CLog"
+CLog.Parent = Page_Camera
+CLog.Size = UDim2.new(1, -20, 0, 150)
+CLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+CLog.BackgroundTransparency = 0.25
+CLog.ScrollBarThickness = 4
+CLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local CLogCorner = Instance.new("UICorner", CLog)
+CLogCorner.CornerRadius = UDim.new(0, 10)
+
+local CLogStroke = Instance.new("UIStroke", CLog)
+CLogStroke.Thickness = 2
+CLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local CLogList = Instance.new("UIListLayout", CLog)
+CLogList.Padding = UDim.new(0, 4)
+CLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddCLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = CLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local cam = workspace.CurrentCamera
+
+local function GetTarget(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+-- تدوير الكاميرا
+BtnCamRotate.MouseButton1Click:Connect(function()
+    AddCLog("تدوير الكاميرا…")
+
+    spawn(function()
+        for i = 1, 60 do
+            task.wait(0.05)
+            cam.CFrame = cam.CFrame * CFrame.Angles(0, math.rad(5), 0)
+        end
+    end)
+end)
+
+-- تقريب الكاميرا
+BtnCamZoomIn.MouseButton1Click:Connect(function()
+    cam.FieldOfView = math.max(10, cam.FieldOfView - 5)
+    AddCLog("تقريب الكاميرا إلى FOV: "..cam.FieldOfView)
+end)
+
+-- تبعيد الكاميرا
+BtnCamZoomOut.MouseButton1Click:Connect(function()
+    cam.FieldOfView = math.min(120, cam.FieldOfView + 5)
+    AddCLog("تبعيد الكاميرا إلى FOV: "..cam.FieldOfView)
+end)
+
+-- كاميرا على لاعب
+BtnCamOnPlayer.MouseButton1Click:Connect(function()
+    local name = TargetCamBox.Text
+    local target = GetTarget(name)
+
+    if not target or not target.Character or not target.Character.PrimaryPart then
+        AddCLog("اللاعب غير موجود")
+        return
+    end
+
+    cam.CameraSubject = target.Character
+    cam.CFrame = target.Character.PrimaryPart.CFrame * CFrame.new(0, 3, 8)
+
+    AddCLog("تم وضع الكاميرا على اللاعب: "..target.Name)
+end)
+
+-- كاميرا ثابتة
+BtnCamStatic.MouseButton1Click:Connect(function()
+    AddCLog("كاميرا ثابتة…")
+
+    cam.CameraType = Enum.CameraType.Scriptable
+    cam.CFrame = lp.Character.PrimaryPart.CFrame * CFrame.new(0, 10, 20)
+end)
+
+-- كاميرا سينمائية
+BtnCamCinematic.MouseButton1Click:Connect(function()
+    AddCLog("كاميرا سينمائية شغّالة")
+
+    cam.CameraType = Enum.CameraType.Scriptable
+
+    spawn(function()
+        while BtnCamCinematic.Parent do
+            task.wait(0.05)
+            cam.CFrame = cam.CFrame * CFrame.Angles(0, math.rad(1), 0)
+        end
+    end)
+end)
+
+-- إعادة الكاميرا للوضع الطبيعي
+BtnCamReset.MouseButton1Click:Connect(function()
+    cam.CameraType = Enum.CameraType.Custom
+    cam.CameraSubject = lp.Character:FindFirstChild("Humanoid")
+    cam.FieldOfView = 70
+
+    AddCLog("تم إعادة الكاميرا للوضع الطبيعي")
+end)
+AddLabel("نظام الفري كام KD7", Page_FreeCam)
+AddSpace(Page_FreeCam)
+
+local BtnFreeCamOn = AddButton("تشغيل الفري كام", Page_FreeCam)
+local BtnFreeCamOff = AddButton("إيقاف الفري كام", Page_FreeCam)
+local BtnFreeCamSpeedUp = AddButton("زيادة سرعة الفري كام", Page_FreeCam)
+local BtnFreeCamSpeedDown = AddButton("خفض سرعة الفري كام", Page_FreeCam)
+local BtnFreeCamRotate = AddButton("دوران الفري كام", Page_FreeCam)
+local BtnFreeCamUp = AddButton("رفع الفري كام", Page_FreeCam)
+local BtnFreeCamDown = AddButton("تنزيل الفري كام", Page_FreeCam)
+
+AddSpace(Page_FreeCam)
+AddLabel("لوق الفري كام", Page_FreeCam)
+
+local FLog = Instance.new("ScrollingFrame")
+FLog.Name = "FLog"
+FLog.Parent = Page_FreeCam
+FLog.Size = UDim2.new(1, -20, 0, 150)
+FLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+FLog.BackgroundTransparency = 0.25
+FLog.ScrollBarThickness = 4
+FLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local FLogCorner = Instance.new("UICorner", FLog)
+FLogCorner.CornerRadius = UDim.new(0, 10)
+
+local FLogStroke = Instance.new("UIStroke", FLog)
+FLogStroke.Thickness = 2
+FLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local FLogList = Instance.new("UIListLayout", FLog)
+FLogList.Padding = UDim.new(0, 4)
+FLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddFLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = FLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local cam = workspace.CurrentCamera
+local FreeCamActive = false
+local FreeCamSpeed = 2
+local FreeCamHeight = 0
+
+-- تشغيل الفري كام
+BtnFreeCamOn.MouseButton1Click:Connect(function()
+    FreeCamActive = true
+    cam.CameraType = Enum.CameraType.Scriptable
+    AddFLog("تم تشغيل الفري كام")
+
+    spawn(function()
+        while FreeCamActive do
+            task.wait()
+            cam.CFrame = cam.CFrame * CFrame.new(0, FreeCamHeight, -FreeCamSpeed)
+        end
+    end)
+end)
+
+-- إيقاف الفري كام
+BtnFreeCamOff.MouseButton1Click:Connect(function()
+    FreeCamActive = false
+    cam.CameraType = Enum.CameraType.Custom
+    cam.CameraSubject = lp.Character:FindFirstChild("Humanoid")
+    AddFLog("تم إيقاف الفري كام")
+end)
+
+-- زيادة السرعة
+BtnFreeCamSpeedUp.MouseButton1Click:Connect(function()
+    FreeCamSpeed = FreeCamSpeed + 1
+    AddFLog("زيادة سرعة الفري كام إلى: "..FreeCamSpeed)
+end)
+
+-- خفض السرعة
+BtnFreeCamSpeedDown.MouseButton1Click:Connect(function()
+    FreeCamSpeed = math.max(1, FreeCamSpeed - 1)
+    AddFLog("خفض سرعة الفري كام إلى: "..FreeCamSpeed)
+end)
+
+-- دوران الفري كام
+BtnFreeCamRotate.MouseButton1Click:Connect(function()
+    AddFLog("دوران الفري كام…")
+
+    spawn(function()
+        for i = 1, 60 do
+            task.wait(0.05)
+            cam.CFrame = cam.CFrame * CFrame.Angles(0, math.rad(5), 0)
+        end
+    end)
+end)
+
+-- رفع الفري كام
+BtnFreeCamUp.MouseButton1Click:Connect(function()
+    FreeCamHeight = FreeCamHeight + 1
+    AddFLog("رفع الفري كام إلى: "..FreeCamHeight)
+end)
+
+-- تنزيل الفري كام
+BtnFreeCamDown.MouseButton1Click:Connect(function()
+    FreeCamHeight = FreeCamHeight - 1
+    AddFLog("تنزيل الفري كام إلى: "..FreeCamHeight)
+end)
+AddLabel("نظام التحكم بالـ NPCs KD7", Page_NPC)
+AddSpace(Page_NPC)
+
+local NPCNameBox = AddBox("اسم الـ NPC", Page_NPC)
+AddSpace(Page_NPC)
+
+local BtnSpawnNPC = AddButton("سباون NPC", Page_NPC)
+local BtnNPCFollowMe = AddButton("NPC يتبعك", Page_NPC)
+local BtnNPCChasePlayer = AddButton("NPC يلاحق لاعب", Page_NPC)
+local BtnNPCAttackPlayer = AddButton("NPC يهاجم لاعب", Page_NPC)
+local BtnNPCMoveUp = AddButton("رفع الـ NPC", Page_NPC)
+local BtnNPCMoveDown = AddButton("تنزيل الـ NPC", Page_NPC)
+local BtnDeleteNPCs = AddButton("حذف كل الـ NPCs", Page_NPC)
+
+AddSpace(Page_NPC)
+AddLabel("لوق الـ NPCs", Page_NPC)
+
+local NLog = Instance.new("ScrollingFrame")
+NLog.Name = "NLog"
+NLog.Parent = Page_NPC
+NLog.Size = UDim2.new(1, -20, 0, 150)
+NLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+NLog.BackgroundTransparency = 0.25
+NLog.ScrollBarThickness = 4
+NLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local NLogCorner = Instance.new("UICorner", NLog)
+NLogCorner.CornerRadius = UDim.new(0, 10)
+
+local NLogStroke = Instance.new("UIStroke", NLog)
+NLogStroke.Thickness = 2
+NLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local NLogList = Instance.new("UIListLayout", NLog)
+NLogList.Padding = UDim.new(0, 4)
+NLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddNLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = NLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedNPCs = {}
+
+local function GetTarget(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+-- سباون NPC
+BtnSpawnNPC.MouseButton1Click:Connect(function()
+    local name = NPCNameBox.Text
+    if name == "" then name = "KD7_NPC" end
+
+    local npc = Instance.new("Model")
+    npc.Name = name
+
+    local head = Instance.new("Part")
+    head.Name = "Head"
+    head.Size = Vector3.new(2,2,2)
+    head.Color = Color3.fromRGB(0,255,0)
+    head.Parent = npc
+
+    local hum = Instance.new("Humanoid")
+    hum.Parent = npc
+
+    npc.PrimaryPart = head
+    npc.Parent = workspace
+
+    head.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,5,0)
+
+    table.insert(SpawnedNPCs, npc)
+    AddNLog("تم سباون NPC: "..name)
+end)
+
+-- NPC يتبعك
+BtnNPCFollowMe.MouseButton1Click:Connect(function()
+    AddNLog("NPC يتبعك شغّال")
+
+    spawn(function()
+        while BtnNPCFollowMe.Parent do
+            task.wait(0.1)
+            for _, npc in pairs(SpawnedNPCs) do
+                if npc.PrimaryPart then
+                    local pos = lp.Character.PrimaryPart.Position
+                    npc:SetPrimaryPartCFrame(
+                        npc.PrimaryPart.CFrame:Lerp(
+                            CFrame.new(pos + Vector3.new(0,0,-4)), 0.1
+                        )
+                    )
+                end
+            end
+        end
+    end)
+end)
+
+-- NPC يلاحق لاعب
+BtnNPCChasePlayer.MouseButton1Click:Connect(function()
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target or not target.Character then
+        AddNLog("لا يوجد لاعب للملاحقة")
+        return
+    end
+
+    AddNLog("NPC يلاحق اللاعب: "..target.Name)
+
+    spawn(function()
+        while BtnNPCChasePlayer.Parent do
+            task.wait(0.1)
+            for _, npc in pairs(SpawnedNPCs) do
+                if npc.PrimaryPart then
+                    local pos = target.Character.PrimaryPart.Position
+                    npc:SetPrimaryPartCFrame(
+                        npc.PrimaryPart.CFrame:Lerp(
+                            CFrame.new(pos), 0.1
+                        )
+                    )
+                end
+            end
+        end
+    end)
+end)
+
+-- NPC يهاجم لاعب
+BtnNPCAttackPlayer.MouseButton1Click:Connect(function()
+    local target = nil
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp then
+            target = plr
+            break
+        end
+    end
+
+    if not target or not target.Character then
+        AddNLog("لا يوجد لاعب للهجوم")
+        return
+    end
+
+    AddNLog("NPC يهاجم اللاعب: "..target.Name)
+
+    spawn(function()
+        while BtnNPCAttackPlayer.Parent do
+            task.wait(0.1)
+            if target.Character:FindFirstChild("Humanoid") then
+                target.Character.Humanoid.Health = target.Character.Humanoid.Health - 5
+            end
+        end
+    end)
+end)
+
+-- رفع الـ NPC
+BtnNPCMoveUp.MouseButton1Click:Connect(function()
+    AddNLog("رفع الـ NPC للأعلى")
+
+    for _, npc in pairs(SpawnedNPCs) do
+        if npc.PrimaryPart then
+            npc:SetPrimaryPartCFrame(
+                npc.PrimaryPart.CFrame * CFrame.new(0, 5, 0)
+            )
+        end
+    end
+end)
+
+-- تنزيل الـ NPC
+BtnNPCMoveDown.MouseButton1Click:Connect(function()
+    AddNLog("تنزيل الـ NPC للأسفل")
+
+    for _, npc in pairs(SpawnedNPCs) do
+        if npc.PrimaryPart then
+            npc:SetPrimaryPartCFrame(
+                npc.PrimaryPart.CFrame * CFrame.new(0, -5, 0)
+            )
+        end
+    end
+end)
+
+-- حذف كل الـ NPCs
+BtnDeleteNPCs.MouseButton1Click:Connect(function()
+    AddNLog("حذف كل الـ NPCs…")
+
+    for _, npc in pairs(SpawnedNPCs) do
+        if npc and npc.Parent then
+            npc:Destroy()
+        end
+    end
+
+    SpawnedNPCs = {}
+    AddNLog("تم حذف كل الـ NPCs")
+end)
+AddLabel("نظام الأنميشن KD7", Page_Anim)
+AddSpace(Page_Anim)
+
+local AnimIDBox = AddBox("ID الأنميشن", Page_Anim)
+AddSpace(Page_Anim)
+
+local BtnPlayAnim = AddButton("تشغيل أنميشن", Page_Anim)
+local BtnStopAnim = AddButton("إيقاف الأنميشن", Page_Anim)
+local BtnDanceAnim = AddButton("أنميشن رقص", Page_Anim)
+local BtnFightAnim = AddButton("أنميشن قتال", Page_Anim)
+local BtnFlyAnim = AddButton("أنميشن طيران", Page_Anim)
+local BtnCustomAnim = AddButton("تشغيل أنميشن مخصص", Page_Anim)
+
+AddSpace(Page_Anim)
+AddLabel("لوق الأنميشن", Page_Anim)
+
+local ALog = Instance.new("ScrollingFrame")
+ALog.Name = "ALog"
+ALog.Parent = Page_Anim
+ALog.Size = UDim2.new(1, -20, 0, 150)
+ALog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ALog.BackgroundTransparency = 0.25
+ALog.ScrollBarThickness = 4
+ALog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ALogCorner = Instance.new("UICorner", ALog)
+ALogCorner.CornerRadius = UDim.new(0, 10)
+
+local ALogStroke = Instance.new("UIStroke", ALog)
+ALogStroke.Thickness = 2
+ALogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ALogList = Instance.new("UIListLayout", ALog)
+ALogList.Padding = UDim.new(0, 4)
+ALogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddALog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ALog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local CurrentAnim = nil
+
+local function PlayAnimation(id)
+    local hum = lp.Character:FindFirstChild("Humanoid")
+    if not hum then return end
+
+    if CurrentAnim then
+        CurrentAnim:Stop()
+        CurrentAnim = nil
+    end
+
+    local anim = Instance.new("Animation")
+    anim.AnimationId = "rbxassetid://"..id
+
+    CurrentAnim = hum:LoadAnimation(anim)
+    CurrentAnim:Play()
+
+    AddALog("تشغيل أنميشن: "..id)
+end
+
+-- تشغيل أنميشن
+BtnPlayAnim.MouseButton1Click:Connect(function()
+    local id = AnimIDBox.Text
+    if id == "" then
+        AddALog("لم يتم إدخال ID الأنميشن")
+        return
+    end
+    PlayAnimation(id)
+end)
+
+-- إيقاف الأنميشن
+BtnStopAnim.MouseButton1Click:Connect(function()
+    if CurrentAnim then
+        CurrentAnim:Stop()
+        CurrentAnim = nil
+        AddALog("تم إيقاف الأنميشن")
+    end
+end)
+
+-- أنميشن رقص
+BtnDanceAnim.MouseButton1Click:Connect(function()
+    PlayAnimation("507771019") -- Roblox Dance
+    AddALog("تشغيل أنميشن رقص")
+end)
+
+-- أنميشن قتال
+BtnFightAnim.MouseButton1Click:Connect(function()
+    PlayAnimation("429730012") -- Fight animation
+    AddALog("تشغيل أنميشن قتال")
+end)
+
+-- أنميشن طيران
+BtnFlyAnim.MouseButton1Click:Connect(function()
+    PlayAnimation("354111430") -- Flying animation
+    AddALog("تشغيل أنميشن طيران")
+end)
+
+-- أنميشن مخصص
+BtnCustomAnim.MouseButton1Click:Connect(function()
+    local id = AnimIDBox.Text
+    if id == "" then
+        AddALog("لم يتم إدخال ID الأنميشن")
+        return
+    end
+    PlayAnimation(id)
+    AddALog("تشغيل أنميشن مخصص")
+end)
+AddLabel("نظام الأدمن KD7", Page_Admin)
+AddSpace(Page_Admin)
+
+local AdminTargetBox = AddBox("اسم اللاعب", Page_Admin)
+AddSpace(Page_Admin)
+
+local BtnKick = AddButton("كيك لاعب", Page_Admin)
+local BtnBan = AddButton("بن لاعب", Page_Admin)
+local BtnTPToPlayer = AddButton("تيلبورت إليه", Page_Admin)
+local BtnTPPlayerToMe = AddButton("تيلبورت اللاعب إليك", Page_Admin)
+local BtnGiveAdmin = AddButton("إعطاء صلاحيات أدمن", Page_Admin)
+local BtnRemoveAdmin = AddButton("سحب صلاحيات الأدمن", Page_Admin)
+local BtnCheckAdmin = AddButton("كشف إذا اللاعب أدمن", Page_Admin)
+local BtnAdminCommands = AddButton("أوامر أدمن سريعة", Page_Admin)
+
+AddSpace(Page_Admin)
+AddLabel("لوق الأدمن", Page_Admin)
+
+local ALog = Instance.new("ScrollingFrame")
+ALog.Name = "ALog"
+ALog.Parent = Page_Admin
+ALog.Size = UDim2.new(1, -20, 0, 150)
+ALog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ALog.BackgroundTransparency = 0.25
+ALog.ScrollBarThickness = 4
+ALog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ALogCorner = Instance.new("UICorner", ALog)
+ALogCorner.CornerRadius = UDim.new(0, 10)
+
+local ALogStroke = Instance.new("UIStroke", ALog)
+ALogStroke.Thickness = 2
+ALogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ALogList = Instance.new("UIListLayout", ALog)
+ALogList.Padding = UDim.new(0, 4)
+ALogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddALog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ALog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local function GetTarget(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+-- كيك لاعب
+BtnKick.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    target:Kick("تم طردك من السيرفر بواسطة KD7")
+    AddALog("تم كيك اللاعب: "..target.Name)
+end)
+
+-- بن لاعب
+BtnBan.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    target:Kick("تم حظرك من السيرفر بواسطة KD7")
+    AddALog("تم بن اللاعب: "..target.Name)
+end)
+
+-- تيلبورت إليه
+BtnTPToPlayer.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target or not target.Character then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    lp.Character:SetPrimaryPartCFrame(
+        target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -3)
+    )
+
+    AddALog("تم تيلبورت إلي اللاعب: "..target.Name)
+end)
+
+-- تيلبورت اللاعب إليك
+BtnTPPlayerToMe.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target or not target.Character then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    target.Character:SetPrimaryPartCFrame(
+        lp.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -3)
+    )
+
+    AddALog("تم تيلبورت اللاعب إليك")
+end)
+
+-- إعطاء صلاحيات أدمن
+BtnGiveAdmin.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    target:SetAttribute("KD7Admin", true)
+    AddALog("تم إعطاء صلاحيات أدمن للاعب: "..target.Name)
+end)
+
+-- سحب صلاحيات الأدمن
+BtnRemoveAdmin.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    target:SetAttribute("KD7Admin", false)
+    AddALog("تم سحب صلاحيات الأدمن من اللاعب: "..target.Name)
+end)
+
+-- كشف إذا اللاعب أدمن
+BtnCheckAdmin.MouseButton1Click:Connect(function()
+    local name = AdminTargetBox.Text
+    local target = GetTarget(name)
+
+    if not target then
+        AddALog("اللاعب غير موجود")
+        return
+    end
+
+    local isAdmin = target:GetAttribute("KD7Admin")
+    if isAdmin then
+        AddALog("اللاعب أدمن ✔")
+    else
+        AddALog("اللاعب ليس أدمن ✖")
+    end
+end)
+
+-- أوامر أدمن سريعة
+BtnAdminCommands.MouseButton1Click:Connect(function()
+    AddALog("أوامر الأدمن السريعة:")
+    AddALog("• kill me")
+    AddALog("• fly me")
+    AddALog("• noclip me")
+    AddALog("• tp me player")
+    AddALog("• speed me 100")
+end)
+AddLabel("نظام المركبات KD7", Page_Vehicles)
+AddSpace(Page_Vehicles)
+
+local VehicleNameBox = AddBox("اسم المركبة", Page_Vehicles)
+AddSpace(Page_Vehicles)
+
+local BtnSpawnCar = AddButton("سباون سيارة", Page_Vehicles)
+local BtnSpawnPlane = AddButton("سباون طيارة", Page_Vehicles)
+local BtnSpawnBike = AddButton("سباون دراجة", Page_Vehicles)
+local BtnMoveVehicle = AddButton("تحريك المركبة للأمام", Page_Vehicles)
+local BtnSpeedVehicle = AddButton("زيادة سرعة المركبة", Page_Vehicles)
+local BtnExplodeVehicle = AddButton("تفجير المركبة", Page_Vehicles)
+local BtnDeleteVehicles = AddButton("حذف كل المركبات", Page_Vehicles)
+
+AddSpace(Page_Vehicles)
+AddLabel("لوق المركبات", Page_Vehicles)
+
+local VLog = Instance.new("ScrollingFrame")
+VLog.Name = "VLog"
+VLog.Parent = Page_Vehicles
+VLog.Size = UDim2.new(1, -20, 0, 150)
+VLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+VLog.BackgroundTransparency = 0.25
+VLog.ScrollBarThickness = 4
+VLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local VLogCorner = Instance.new("UICorner", VLog)
+VLogCorner.CornerRadius = UDim.new(0, 10)
+
+local VLogStroke = Instance.new("UIStroke", VLog)
+VLogStroke.Thickness = 2
+VLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local VLogList = Instance.new("UIListLayout", VLog)
+VLogList.Padding = UDim.new(0, 4)
+VLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddVLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = VLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedVehicles = {}
+local VehicleSpeed = 5
+
+-- سباون سيارة
+BtnSpawnCar.MouseButton1Click:Connect(function()
+    local name = VehicleNameBox.Text
+    if name == "" then name = "KD7_Car" end
+
+    local car = Instance.new("Model")
+    car.Name = name
+
+    local body = Instance.new("Part")
+    body.Size = Vector3.new(6,2,10)
+    body.Color = Color3.fromRGB(0,0,255)
+    body.Name = "Body"
+    body.Parent = car
+
+    local hum = Instance.new("Humanoid")
+    hum.Parent = car
+
+    car.PrimaryPart = body
+    car.Parent = workspace
+
+    body.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,3,0)
+
+    table.insert(SpawnedVehicles, car)
+    AddVLog("تم سباون سيارة: "..name)
+end)
+
+-- سباون طيارة
+BtnSpawnPlane.MouseButton1Click:Connect(function()
+    local name = VehicleNameBox.Text
+    if name == "" then name = "KD7_Plane" end
+
+    local plane = Instance.new("Model")
+    plane.Name = name
+
+    local body = Instance.new("Part")
+    body.Size = Vector3.new(12,2,20)
+    body.Color = Color3.fromRGB(255,255,0)
+    body.Name = "Body"
+    body.Parent = plane
+
+    local hum = Instance.new("Humanoid")
+    hum.Parent = plane
+
+    plane.PrimaryPart = body
+    plane.Parent = workspace
+
+    body.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,10,0)
+
+    table.insert(SpawnedVehicles, plane)
+    AddVLog("تم سباون طيارة: "..name)
+end)
+
+-- سباون دراجة
+BtnSpawnBike.MouseButton1Click:Connect(function()
+    local name = VehicleNameBox.Text
+    if name == "" then name = "KD7_Bike" end
+
+    local bike = Instance.new("Model")
+    bike.Name = name
+
+    local body = Instance.new("Part")
+    body.Size = Vector3.new(2,2,4)
+    body.Color = Color3.fromRGB(255,0,0)
+    body.Name = "Body"
+    body.Parent = bike
+
+    local hum = Instance.new("Humanoid")
+    hum.Parent = bike
+
+    bike.PrimaryPart = body
+    bike.Parent = workspace
+
+    body.Position = lp.Character.PrimaryPart.Position + Vector3.new(0,2,0)
+
+    table.insert(SpawnedVehicles, bike)
+    AddVLog("تم سباون دراجة: "..name)
+end)
+
+-- تحريك المركبة للأمام
+BtnMoveVehicle.MouseButton1Click:Connect(function()
+    AddVLog("تحريك المركبة للأمام…")
+
+    for _, veh in pairs(SpawnedVehicles) do
+        if veh.PrimaryPart then
+            veh:SetPrimaryPartCFrame(
+                veh.PrimaryPart.CFrame * CFrame.new(0, 0, -VehicleSpeed)
+            )
+        end
+    end
+end)
+
+-- زيادة سرعة المركبة
+BtnSpeedVehicle.MouseButton1Click:Connect(function()
+    VehicleSpeed = VehicleSpeed + 2
+    AddVLog("زيادة سرعة المركبة إلى: "..VehicleSpeed)
+end)
+
+-- تفجير المركبة
+BtnExplodeVehicle.MouseButton1Click:Connect(function()
+    AddVLog("تفجير المركبة…")
+
+    for _, veh in pairs(SpawnedVehicles) do
+        if veh.PrimaryPart then
+            local ex = Instance.new("Explosion")
+            ex.Position = veh.PrimaryPart.Position
+            ex.BlastRadius = 10
+            ex.Parent = workspace
+        end
+    end
+
+    AddVLog("تم التفجير")
+end)
+
+-- حذف كل المركبات
+BtnDeleteVehicles.MouseButton1Click:Connect(function()
+    AddVLog("حذف كل المركبات…")
+
+    for _, veh in pairs(SpawnedVehicles) do
+        if veh and veh.Parent then
+            veh:Destroy()
+        end
+    end
+
+    SpawnedVehicles = {}
+    AddVLog("تم حذف كل المركبات")
+end)
+AddLabel("نظام التيلبورت KD7", Page_TP)
+AddSpace(Page_TP)
+
+local TPNameBox = AddBox("اسم الموقع", Page_TP)
+AddSpace(Page_TP)
+
+local BtnSaveLocation = AddButton("حفظ الموقع الحالي", Page_TP)
+local BtnTeleportToSaved = AddButton("تيلبورت للموقع المحفوظ", Page_TP)
+local BtnTeleportToPlayer = AddButton("تيلبورت إلى لاعب", Page_TP)
+local BtnTeleportPlayerToMe = AddButton("تيلبورت لاعب إليك", Page_TP)
+local BtnTeleportAllToMe = AddButton("تيلبورت الجميع إليك", Page_TP)
+local BtnRandomTP = AddButton("تيلبورت عشوائي", Page_TP)
+
+AddSpace(Page_TP)
+AddLabel("لوق التيلبورت", Page_TP)
+
+local TPLog = Instance.new("ScrollingFrame")
+TPLog.Name = "TPLog"
+TPLog.Parent = Page_TP
+TPLog.Size = UDim2.new(1, -20, 0, 150)
+TPLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+TPLog.BackgroundTransparency = 0.25
+TPLog.ScrollBarThickness = 4
+TPLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local TPLogCorner = Instance.new("UICorner", TPLog)
+TPLogCorner.CornerRadius = UDim.new(0, 10)
+
+local TPLogStroke = Instance.new("UIStroke", TPLog)
+TPLogStroke.Thickness = 2
+TPLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local TPLogList = Instance.new("UIListLayout", TPLog)
+TPLogList.Padding = UDim.new(0, 4)
+TPLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddTPLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = TPLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SavedLocations = {}
+
+local function GetTarget(name)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if string.lower(plr.Name) == string.lower(name) then
+            return plr
+        end
+    end
+    return nil
+end
+
+-- حفظ الموقع الحالي
+BtnSaveLocation.MouseButton1Click:Connect(function()
+    local name = TPNameBox.Text
+    if name == "" then
+        AddTPLog("لم يتم إدخال اسم الموقع")
+        return
+    end
+
+    local char = lp.Character
+    if not char or not char.PrimaryPart then return end
+
+    SavedLocations[name] = char.PrimaryPart.CFrame
+    AddTPLog("تم حفظ الموقع باسم: "..name)
+end)
+
+-- تيلبورت للموقع المحفوظ
+BtnTeleportToSaved.MouseButton1Click:Connect(function()
+    local name = TPNameBox.Text
+    if not SavedLocations[name] then
+        AddTPLog("الموقع غير موجود")
+        return
+    end
+
+    lp.Character:SetPrimaryPartCFrame(SavedLocations[name])
+    AddTPLog("تم التيلبورت إلى الموقع: "..name)
+end)
+
+-- تيلبورت إلى لاعب
+BtnTeleportToPlayer.MouseButton1Click:Connect(function()
+    local name = TPNameBox.Text
+    local target = GetTarget(name)
+
+    if not target or not target.Character then
+        AddTPLog("اللاعب غير موجود")
+        return
+    end
+
+    lp.Character:SetPrimaryPartCFrame(
+        target.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -3)
+    )
+
+    AddTPLog("تم التيلبورت إلى اللاعب: "..target.Name)
+end)
+
+-- تيلبورت لاعب إليك
+BtnTeleportPlayerToMe.MouseButton1Click:Connect(function()
+    local name = TPNameBox.Text
+    local target = GetTarget(name)
+
+    if not target or not target.Character then
+        AddTPLog("اللاعب غير موجود")
+        return
+    end
+
+    target.Character:SetPrimaryPartCFrame(
+        lp.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -3)
+    )
+
+    AddTPLog("تم تيلبورت اللاعب إليك")
+end)
+
+-- تيلبورت الجميع إليك
+BtnTeleportAllToMe.MouseButton1Click:Connect(function()
+    AddTPLog("تيلبورت الجميع إليك…")
+
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= lp and plr.Character and plr.Character.PrimaryPart then
+            plr.Character:SetPrimaryPartCFrame(
+                lp.Character.PrimaryPart.CFrame * CFrame.new(0, 0, -5)
+            )
+        end
+    end
+
+    AddTPLog("تم تيلبورت الجميع إليك")
+end)
+
+-- تيلبورت عشوائي
+BtnRandomTP.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if not char or not char.PrimaryPart then return end
+
+    local x = math.random(-300, 300)
+    local y = math.random(10, 150)
+    local z = math.random(-300, 300)
+
+    char:SetPrimaryPartCFrame(CFrame.new(x, y, z))
+    AddTPLog("تم التيلبورت العشوائي")
+end)
+AddLabel("نظام الـ ESP KD7", Page_ESP)
+AddSpace(Page_ESP)
+
+local BtnESPPlayers = AddButton("تفعيل رؤية اللاعبين", Page_ESP)
+local BtnESPTools = AddButton("تفعيل رؤية الأدوات", Page_ESP)
+local BtnESPParts = AddButton("تفعيل رؤية أجزاء الماب", Page_ESP)
+local BtnWallHack = AddButton("تفعيل رؤية من خلال الجدران", Page_ESP)
+local BtnDisableESP = AddButton("تعطيل كل الـ ESP", Page_ESP)
+
+AddSpace(Page_ESP)
+AddLabel("لوق الـ ESP", Page_ESP)
+
+local ESPLog = Instance.new("ScrollingFrame")
+ESPLog.Name = "ESPLog"
+ESPLog.Parent = Page_ESP
+ESPLog.Size = UDim2.new(1, -20, 0, 150)
+ESPLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ESPLog.BackgroundTransparency = 0.25
+ESPLog.ScrollBarThickness = 4
+ESPLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ESPLogCorner = Instance.new("UICorner", ESPLog)
+ESPLogCorner.CornerRadius = UDim.new(0, 10)
+
+local ESPLogStroke = Instance.new("UIStroke", ESPLog)
+ESPLogStroke.Thickness = 2
+ESPLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ESPLogList = Instance.new("UIListLayout", ESPLog)
+ESPLogList.Padding = UDim.new(0, 4)
+ESPLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddESPLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ESPLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local ESPObjects = {}
+
+local function CreateESP(obj, color)
+    if not obj or not obj:IsA("BasePart") then return end
+
+    local highlight = Instance.new("Highlight")
+    highlight.FillColor = color
+    highlight.OutlineColor = color
+    highlight.FillTransparency = 0.5
+    highlight.OutlineTransparency = 0
+    highlight.Parent = obj
+
+    table.insert(ESPObjects, highlight)
+end
+
+-- رؤية اللاعبين
+BtnESPPlayers.MouseButton1Click:Connect(function()
+    AddESPLog("تفعيل رؤية اللاعبين…")
+
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr.Character then
+            for _, part in pairs(plr.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    CreateESP(part, Color3.fromRGB(0,255,0))
+                end
+            end
+        end
+    end
+
+    AddESPLog("تم تفعيل رؤية اللاعبين")
+end)
+
+-- رؤية الأدوات
+BtnESPTools.MouseButton1Click:Connect(function()
+    AddESPLog("تفعيل رؤية الأدوات…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Tool") then
+            if v:FindFirstChild("Handle") then
+                CreateESP(v.Handle, Color3.fromRGB(255,255,0))
+            end
+        end
+    end
+
+    AddESPLog("تم تفعيل رؤية الأدوات")
+end)
+
+-- رؤية أجزاء الماب
+BtnESPParts.MouseButton1Click:Connect(function()
+    AddESPLog("تفعيل رؤية أجزاء الماب…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Part") and v.Size.Magnitude > 5 then
+            CreateESP(v, Color3.fromRGB(0,0,255))
+        end
+    end
+
+    AddESPLog("تم تفعيل رؤية أجزاء الماب")
+end)
+
+-- رؤية من خلال الجدران (WallHack)
+BtnWallHack.MouseButton1Click:Connect(function()
+    AddESPLog("تفعيل رؤية من خلال الجدران…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.LocalTransparencyModifier = 0.5
+        end
+    end
+
+    AddESPLog("تم تفعيل رؤية من خلال الجدران")
+end)
+
+-- تعطيل كل الـ ESP
+BtnDisableESP.MouseButton1Click:Connect(function()
+    AddESPLog("تعطيل كل الـ ESP…")
+
+    for _, esp in pairs(ESPObjects) do
+        if esp and esp.Parent then
+            esp:Destroy()
+        end
+    end
+
+    ESPObjects = {}
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.LocalTransparencyModifier = 0
+        end
+    end
+
+    AddESPLog("تم تعطيل كل الـ ESP")
+end)
+AddLabel("نظام الإكسبلويت المتقدم KD7", Page_Adv)
+AddSpace(Page_Adv)
+
+local BtnDisableScripts = AddButton("تعطيل كل السكربتات", Page_Adv)
+local BtnListScripts = AddButton("كشف السكربتات", Page_Adv)
+local BtnCorruptMap = AddButton("تخريب الماب", Page_Adv)
+local BtnSpawnScript = AddButton("سباون سكربت داخل الماب", Page_Adv)
+local BtnDeleteScripts = AddButton("حذف السكربتات", Page_Adv)
+local BtnAdvancedCmds = AddButton("أوامر متقدمة", Page_Adv)
+
+AddSpace(Page_Adv)
+AddLabel("لوق الإكسبلويت المتقدم", Page_Adv)
+
+local AdvLog = Instance.new("ScrollingFrame")
+AdvLog.Name = "AdvLog"
+AdvLog.Parent = Page_Adv
+AdvLog.Size = UDim2.new(1, -20, 0, 150)
+AdvLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+AdvLog.BackgroundTransparency = 0.25
+AdvLog.ScrollBarThickness = 4
+AdvLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local AdvLogCorner = Instance.new("UICorner", AdvLog)
+AdvLogCorner.CornerRadius = UDim.new(0, 10)
+
+local AdvLogStroke = Instance.new("UIStroke", AdvLog)
+AdvLogStroke.Thickness = 2
+AdvLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local AdvLogList = Instance.new("UIListLayout", AdvLog)
+AdvLogList.Padding = UDim.new(0, 4)
+AdvLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddAdvLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = AdvLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local SpawnedScripts = {}
+
+-- تعطيل كل السكربتات
+BtnDisableScripts.MouseButton1Click:Connect(function()
+    AddAdvLog("تعطيل كل السكربتات…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Script") or v:IsA("LocalScript") then
+            v.Disabled = true
+        end
+    end
+
+    AddAdvLog("تم تعطيل كل السكربتات")
+end)
+
+-- كشف السكربتات
+BtnListScripts.MouseButton1Click:Connect(function()
+    AddAdvLog("كشف السكربتات…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Script") or v:IsA("LocalScript") then
+            AddAdvLog("سكربت: "..v.Name)
+        end
+    end
+
+    AddAdvLog("انتهى الكشف")
+end)
+
+-- تخريب الماب
+BtnCorruptMap.MouseButton1Click:Connect(function()
+    AddAdvLog("تخريب الماب…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.Color = Color3.fromRGB(math.random(0,255), math.random(0,255), math.random(0,255))
+            v.Material = Enum.Material.Neon
+            v.Size = v.Size + Vector3.new(math.random(1,5), math.random(1,5), math.random(1,5))
+        end
+    end
+
+    AddAdvLog("تم تخريب الماب بالكامل")
+end)
+
+-- سباون سكربت داخل الماب
+BtnSpawnScript.MouseButton1Click:Connect(function()
+    AddAdvLog("سباون سكربت داخل الماب…")
+
+    local s = Instance.new("Script")
+    s.Name = "KD7_SpawnedScript"
+    s.Source = [[while true do wait(1) print("KD7 Script Running") end]]
+    s.Parent = workspace
+
+    table.insert(SpawnedScripts, s)
+    AddAdvLog("تم سباون سكربت جديد")
+end)
+
+-- حذف السكربتات
+BtnDeleteScripts.MouseButton1Click:Connect(function()
+    AddAdvLog("حذف السكربتات…")
+
+    for _, v in pairs(SpawnedScripts) do
+        if v and v.Parent then
+            v:Destroy()
+        end
+    end
+
+    SpawnedScripts = {}
+    AddAdvLog("تم حذف السكربتات المسبونة")
+end)
+
+-- أوامر متقدمة
+BtnAdvancedCmds.MouseButton1Click:Connect(function()
+    AddAdvLog("أوامر متقدمة KD7:")
+    AddAdvLog("• disable_all_scripts()")
+    AddAdvLog("• corrupt_map()")
+    AddAdvLog("• spawn_script()")
+    AddAdvLog("• delete_spawned_scripts()")
+    AddAdvLog("• scan_scripts()")
+end)
+AddLabel("نظام تحسين الأداء KD7", Page_Perf)
+AddSpace(Page_Perf)
+
+local BtnBoostFPS = AddButton("رفع الـ FPS", Page_Perf)
+local BtnReduceLag = AddButton("تقليل اللّاق", Page_Perf)
+local BtnClearMap = AddButton("تنظيف الماب", Page_Perf)
+local BtnDisableEffects = AddButton("تعطيل التأثيرات", Page_Perf)
+local BtnRemoveParticles = AddButton("حذف البارتكلز", Page_Perf)
+local BtnOptimizeLighting = AddButton("تحسين الإضاءة", Page_Perf)
+local BtnHardClean = AddButton("تنظيف قوي (Ultra Clean)", Page_Perf)
+
+AddSpace(Page_Perf)
+AddLabel("لوق الأداء", Page_Perf)
+
+local PLog = Instance.new("ScrollingFrame")
+PLog.Name = "PLog"
+PLog.Parent = Page_Perf
+PLog.Size = UDim2.new(1, -20, 0, 150)
+PLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+PLog.BackgroundTransparency = 0.25
+PLog.ScrollBarThickness = 4
+PLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local PLogCorner = Instance.new("UICorner", PLog)
+PLogCorner.CornerRadius = UDim.new(0, 10)
+
+local PLogStroke = Instance.new("UIStroke", PLog)
+PLogStroke.Thickness = 2
+PLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local PLogList = Instance.new("UIListLayout", PLog)
+PLogList.Padding = UDim.new(0, 4)
+PLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddPLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = PLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+-- رفع FPS
+BtnBoostFPS.MouseButton1Click:Connect(function()
+    AddPLog("رفع الـ FPS…")
+
+    game:GetService("Lighting").GlobalShadows = false
+    game:GetService("Lighting").Brightness = 1
+    game:GetService("Lighting").Ambient = Color3.fromRGB(50,50,50)
+
+    AddPLog("تم رفع الـ FPS")
+end)
+
+-- تقليل اللّاق
+BtnReduceLag.MouseButton1Click:Connect(function()
+    AddPLog("تقليل اللّاق…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("MeshPart") then
+            v.RenderFidelity = Enum.RenderFidelity.Automatic
+        end
+        if v:IsA("BasePart") then
+            v.CastShadow = false
+        end
+    end
+
+    AddPLog("تم تقليل اللّاق")
+end)
+
+-- تنظيف الماب
+BtnClearMap.MouseButton1Click:Connect(function()
+    AddPLog("تنظيف الماب…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Part") and v.Size.Magnitude < 2 then
+            v:Destroy()
+        end
+        if v:IsA("Model") and #v:GetChildren() < 2 then
+            v:Destroy()
+        end
+    end
+
+    AddPLog("تم تنظيف الماب")
+end)
+
+-- تعطيل التأثيرات
+BtnDisableEffects.MouseButton1Click:Connect(function()
+    AddPLog("تعطيل التأثيرات…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") then
+            v.Enabled = false
+        end
+    end
+
+    AddPLog("تم تعطيل التأثيرات")
+end)
+
+-- حذف البارتكلز
+BtnRemoveParticles.MouseButton1Click:Connect(function()
+    AddPLog("حذف البارتكلز…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ParticleEmitter") then
+            v:Destroy()
+        end
+    end
+
+    AddPLog("تم حذف البارتكلز")
+end)
+
+-- تحسين الإضاءة
+BtnOptimizeLighting.MouseButton1Click:Connect(function()
+    AddPLog("تحسين الإضاءة…")
+
+    local L = game:GetService("Lighting")
+    L.FogEnd = 100000
+    L.FogStart = 0
+    L.ExposureCompensation = 0
+    L.ShadowSoftness = 0
+
+    AddPLog("تم تحسين الإضاءة")
+end)
+
+-- تنظيف قوي
+BtnHardClean.MouseButton1Click:Connect(function()
+    AddPLog("تنظيف قوي (Ultra Clean)…")
+
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") or v:IsA("Smoke") or v:IsA("Fire") then
+            v:Destroy()
+        end
+        if v:IsA("Decal") then
+            v.Texture = ""
+        end
+    end
+
+    AddPLog("تم التنظيف القوي")
+end)
+AddLabel("نظام الحماية من الكراش KD7", Page_AntiCrash)
+AddSpace(Page_AntiCrash)
+
+local BtnAntiCrashOn = AddButton("تشغيل نظام الحماية", Page_AntiCrash)
+local BtnAntiCrashOff = AddButton("إيقاف نظام الحماية", Page_AntiCrash)
+local BtnBlockMassSpawn = AddButton("منع سباون ضخم", Page_AntiCrash)
+local BtnBlockSpam = AddButton("منع التكرار السريع", Page_AntiCrash)
+local BtnMonitorLag = AddButton("مراقبة اللود واللاق", Page_AntiCrash)
+local BtnAutoClean = AddButton("تنظيف تلقائي عند ارتفاع اللود", Page_AntiCrash)
+
+AddSpace(Page_AntiCrash)
+AddLabel("لوق الحماية", Page_AntiCrash)
+
+local ACLog = Instance.new("ScrollingFrame")
+ACLog.Name = "ACLog"
+ACLog.Parent = Page_AntiCrash
+ACLog.Size = UDim2.new(1, -20, 0, 150)
+ACLog.BackgroundColor3 = Color3.fromRGB(15,15,15)
+ACLog.BackgroundTransparency = 0.25
+ACLog.ScrollBarThickness = 4
+ACLog.CanvasSize = UDim2.new(0, 0, 0, 600)
+
+local ACLogCorner = Instance.new("UICorner", ACLog)
+ACLogCorner.CornerRadius = UDim.new(0, 10)
+
+local ACLogStroke = Instance.new("UIStroke", ACLog)
+ACLogStroke.Thickness = 2
+ACLogStroke.Color = Color3.fromRGB(255,255,255)
+
+local ACLogList = Instance.new("UIListLayout", ACLog)
+ACLogList.Padding = UDim.new(0, 4)
+ACLogList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function AddACLog(msg)
+    local L = Instance.new("TextLabel")
+    L.Parent = ACLog
+    L.Size = UDim2.new(1, -10, 0, 25)
+    L.BackgroundTransparency = 1
+    L.TextColor3 = Color3.fromRGB(255,255,255)
+    L.Font = Enum.Font.GothamBold
+    L.TextScaled = true
+    L.Text = msg
+end
+
+local AntiCrashEnabled = false
+local BlockMassSpawn = false
+local BlockSpam = false
+
+-- تشغيل نظام الحماية
+BtnAntiCrashOn.MouseButton1Click:Connect(function()
+    AntiCrashEnabled = true
+    AddACLog("تم تشغيل نظام الحماية من الكراش")
+end)
+
+-- إيقاف نظام الحماية
+BtnAntiCrashOff.MouseButton1Click:Connect(function()
+    AntiCrashEnabled = false
+    AddACLog("تم إيقاف نظام الحماية")
+end)
+
+-- منع سباون ضخم
+BtnBlockMassSpawn.MouseButton1Click:Connect(function()
+    BlockMassSpawn = true
+    AddACLog("تم تفعيل منع السبون الضخم")
+end)
+
+-- منع التكرار السريع
+BtnBlockSpam.MouseButton1Click:Connect(function()
+    BlockSpam = true
+    AddACLog("تم تفعيل منع التكرار السريع")
+end)
+
+-- مراقبة اللود
+BtnMonitorLag.MouseButton1Click:Connect(function()
+    AddACLog("بدء مراقبة اللود…")
+
+    spawn(function()
+        while BtnMonitorLag.Parent do
+            task.wait(1)
+
+            local count = #workspace:GetDescendants()
+
+            if count > 5000 then
+                AddACLog("⚠ تحذير: عدد الأجسام كبير جداً ("..count..")")
+            end
+
+            if count > 8000 and AntiCrashEnabled then
+                AddACLog("⚠ لود عالي جداً! تشغيل حماية تلقائية…")
+
+                for _, v in pairs(workspace:GetDescendants()) do
+                    if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") then
+                        v:Destroy()
+                    end
+                end
+
+                AddACLog("✔ تم تقليل اللود تلقائياً")
+            end
+        end
+    end)
+end)
+
+-- تنظيف تلقائي عند ارتفاع اللود
+BtnAutoClean.MouseButton1Click:Connect(function()
+    AddACLog("تشغيل التنظيف التلقائي…")
+
+    spawn(function()
+        while BtnAutoClean.Parent do
+            task.wait(2)
+
+            local count = #workspace:GetDescendants()
+
+            if count > 6000 then
+                AddACLog("⚠ لود مرتفع! تنظيف تلقائي…")
+
+                for _, v in pairs(workspace:GetDescendants()) do
+                    if v:IsA("Part") and v.Size.Magnitude < 2 then
+                        v:Destroy()
+                    end
+                end
+
+                AddACLog("✔ تم التنظيف التلقائي بنجاح")
+            end
+        end
+    end)
+end)
+--============================--
+-- KD7 HUB MAIN CORE SYSTEM  --
+--============================--
+
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+-- إنشاء ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "KD7Hub"
+gui.Parent = lp:WaitForChild("PlayerGui")
+
+-- إطار رئيسي
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 600, 0, 400)
+MainFrame.Position = UDim2.new(0.5, -300, 0.5, -200)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+MainFrame.Parent = gui
+
+local MainCorner = Instance.new("UICorner", MainFrame)
+MainCorner.CornerRadius = UDim.new(0, 12)
+
+-- قائمة الصفحات
+local Pages = Instance.new("Folder")
+Pages.Name = "Pages"
+Pages.Parent = MainFrame
+
+-- دالة إنشاء صفحة
+function NewPage(name)
+    local page = Instance.new("Frame")
+    page.Name = name
+    page.Size = UDim2.new(1,0,1,0)
+    page.BackgroundTransparency = 1
+    page.Visible = false
+    page.Parent = Pages
+    return page
+end
+
+-- دالة فتح صفحة
+function OpenPage(name)
+    for _, p in pairs(Pages:GetChildren()) do
+        p.Visible = false
+    end
+    Pages[name].Visible = true
+end
+
+-- دالة إضافة زر
+function AddButton(txt, parent)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(1, -20, 0, 35)
+    b.Position = UDim2.new(0, 10, 0, parent:GetChildren() and (#parent:GetChildren()*40))
+    b.Text = txt
+    b.Font = Enum.Font.GothamBold
+    b.TextScaled = true
+    b.BackgroundColor3 = Color3.fromRGB(40,40,40)
+    b.TextColor3 = Color3.fromRGB(255,255,255)
+    b.Parent = parent
+
+    local bc = Instance.new("UICorner", b)
+    bc.CornerRadius = UDim.new(0, 8)
+
+    return b
+end
+
+-- دالة إضافة مربع كتابة
+function AddBox(placeholder, parent)
+    local box = Instance.new("TextBox")
+    box.Size = UDim2.new(1, -20, 0, 35)
+    box.Position = UDim2.new(0, 10, 0, parent:GetChildren() and (#parent:GetChildren()*40))
+    box.PlaceholderText = placeholder
+    box.Font = Enum.Font.GothamBold
+    box.TextScaled = true
+    box.BackgroundColor3 = Color3.fromRGB(30,30,30)
+    box.TextColor3 = Color3.fromRGB(255,255,255)
+    box.Parent = parent
+
+    local bc = Instance.new("UICorner", box)
+    bc.CornerRadius = UDim.new(0, 8)
+
+    return box
+end
+
+-- دالة إضافة عنوان
+function AddLabel(txt, parent)
+    local l = Instance.new("TextLabel")
+    l.Size = UDim2.new(1, -20, 0, 35)
+    l.Position = UDim2.new(0, 10, 0, parent:GetChildren() and (#parent:GetChildren()*40))
+    l.Text = txt
+    l.Font = Enum.Font.GothamBold
+    l.TextScaled = true
+    l.BackgroundTransparency = 1
+    l.TextColor3 = Color3.fromRGB(255,255,255)
+    l.Parent = parent
+end
+
+-- دالة إضافة مسافة
+function AddSpace(parent)
+    local s = Instance.new("Frame")
+    s.Size = UDim2.new(1,0,0,10)
+    s.BackgroundTransparency = 1
+    s.Parent = parent
+end
+
+--============================--
+-- إنشاء الصفحات الأساسية    --
+--============================--
+
+Page_Monsters = NewPage("Monsters")
+Page_World = NewPage("World")
+Page_TimeWeather = NewPage("TimeWeather")
+Page_Sound = NewPage("Sound")
+Page_Camera = NewPage("Camera")
+Page_FreeCam = NewPage("FreeCam")
+Page_NPC = NewPage("NPC")
+Page_Anim = NewPage("Anim")
+Page_Admin = NewPage("Admin")
+Page_Vehicles = NewPage("Vehicles")
+Page_TP = NewPage("Teleport")
+Page_ESP = NewPage("ESP")
+Page_Adv = NewPage("Advanced")
+Page_Perf = NewPage("Performance")
+Page_AntiCrash = NewPage("AntiCrash")
+
+--============================--
+-- قائمة التنقل بين الصفحات --
+--============================--
+
+local Nav = Instance.new("Frame")
+Nav.Size = UDim2.new(0, 150, 1, 0)
+Nav.BackgroundColor3 = Color3.fromRGB(15,15,15)
+Nav.Parent = MainFrame
+
+local NavCorner = Instance.new("UICorner", Nav)
+NavCorner.CornerRadius = UDim.new(0, 12)
+
+function AddNavButton(txt, page)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(1, -10, 0, 35)
+    b.Position = UDim2.new(0, 5, 0, (#Nav:GetChildren()*40))
+    b.Text = txt
+    b.Font = Enum.Font.GothamBold
+    b.TextScaled = true
+    b.BackgroundColor3 = Color3.fromRGB(40,40,40)
+    b.TextColor3 = Color3.fromRGB(255,255,255)
+    b.Parent = Nav
+
+    local bc = Instance.new("UICorner", b)
+    bc.CornerRadius = UDim.new(0, 8)
+
+    b.MouseButton1Click:Connect(function()
+        OpenPage(page)
+    end)
+end
+
+-- أزرار التنقل
+AddNavButton("Monsters", "Monsters")
+AddNavButton("World", "World")
+AddNavButton("Time/Weather", "TimeWeather")
+AddNavButton("Sound", "Sound")
+AddNavButton("Camera", "Camera")
+AddNavButton("FreeCam", "FreeCam")
+AddNavButton("NPC", "NPC")
+AddNavButton("Anim", "Anim")
+AddNavButton("Admin", "Admin")
+AddNavButton("Vehicles", "Vehicles")
+AddNavButton("Teleport", "Teleport")
+AddNavButton("ESP", "ESP")
+AddNavButton("Advanced", "Advanced")
+AddNavButton("Performance", "Performance")
+AddNavButton("AntiCrash", "AntiCrash")
+
+-- فتح أول صفحة
+OpenPage("Monsters")
